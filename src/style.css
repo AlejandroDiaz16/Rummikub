@@ -1,0 +1,124 @@
+html {
+	min-height: 100%;
+	position: relative;
+}
+body {
+	margin: 0;
+	margin-bottom: 40px;
+}
+footer {
+	background-image: url("./img/fondoMadera.jpg");
+	position: absolute;
+	min-height: 240px;
+	bottom: 0;
+	left: 0px;
+	width: 100%;
+	height: auto;
+}
+
+.footerIndex {
+	min-height: auto !important;
+}
+
+.titleDash {
+	margin-top: 1%;
+}
+
+.playersDash {
+	margin-top: 5%;
+}
+
+.playerCard {
+	max-width: 200px !important;
+}
+
+.gameBackground {
+	background: #008000;
+	max-width: 100% !important;
+	border: 30px solid transparent;
+	border-image:url("./img/fondoMadera.jpg") 30 30 round;
+	display: flex;
+}
+
+
+.gameBackgroundIcons {
+	background: #008000;
+	max-width: 15%!important;
+	border: 30px solid transparent;
+	border-image:url("./img/fondoMadera.jpg") 30 30 round;
+	display: flex;
+}
+
+.container {
+	/*min-width: 400px;*/
+	/*min-height: 492px;*/
+	height:-webkit-fill-available;
+}
+
+.centerElements {
+	justify-content: center;
+}
+
+.marginFoot {
+	margin: 30px 30px !important;
+}
+
+.row {
+
+}
+
+.column {
+	float:left;
+	width: 50%;
+}
+
+.connected-sortable {
+	list-style: none;
+}
+
+.positionFoot {
+	background: blue;
+}
+
+.inGameScreen {
+	display: flex;
+}
+
+.tableCards {
+	width: 80%;
+	display: flex;
+	flex-wrap: wrap;
+	align-content: flex-start;
+}
+
+.claseNueva {
+	width: 20%;
+	min-width: 20%;
+	background-image: url("./img/fondoMadera.jpg");
+	border: 5px solid transparent;
+	border-image:url("./img/fondoMadera.jpg") 30 30 round;
+	text-align: center;
+}
+
+.iconTam {
+	width: 90%;
+	max-width: 110px;
+	max-height: 110px;
+}
+
+.colTam {
+	display: flex;
+	margin: 0 5px;
+	max-height: 60px !important;
+	width: auto !important;
+}
+
+.cardsTam {
+	height: 55px;
+	width: 45px;
+}
+
+footer .cardsTam {
+	width: 60px;
+	height: 120px;
+}
