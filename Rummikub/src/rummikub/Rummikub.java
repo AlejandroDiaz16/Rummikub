@@ -21,24 +21,25 @@ public class Rummikub {
      */
     public static void main(String[] args) throws IOException {
         ArrayList<String> prueba = new ArrayList<>();
+        prueba.add("C-0");
+        prueba.add("C-0");
         prueba.add("A-3");
         prueba.add("A-4");
         prueba.add("A-5");
         prueba.add("A-6");
         prueba.add("A-7");
-        prueba.add("C-0");
-        prueba.add("C-0");
 
         BufferedReader sc = new BufferedReader(new InputStreamReader(System.in));
+        
         Fichas fichas = new Fichas();
         Jugadores jugadores = new Jugadores();
         Escalera escalera = new Escalera();
-
-        escalera.organizarPorEscalera(prueba);
+        Trios trios=new Trios();
+        //escalera.organizarPorEscalera(prueba);
         System.out.println(prueba.toString());
         System.out.println(escalera.validarEscalera(prueba));
         //acá se obtiene el mazo
-        ArrayList<String> mazo = fichas.obtenerMazo();
+        ArrayList<String> mazo = fichas.obtenerMazo();        
         System.out.println(mazo.toString());
         //Cuantas personas van a jugar?
         int quantityPlayers = jugadores.numeroJugadores();
@@ -49,12 +50,16 @@ public class Rummikub {
         //Se agregan las fichas a los jugadores
         fichas.llenarDeFichas(14, players, mazo);
         System.out.println("Fichas de cada jugador: ");
+        
         for (int i = 0; i < players.size(); i++) {
             System.out.println("Fichas de jugador " + (i + 1) + ": " + players.get(i).toString());
-        }
-        for (int i = 0; i < players.size(); i++) {
             escalera.organizarPorEscalera(players.get(i));
-            System.out.println("Fichas de jugador " + (i + 1) + ": " + players.get(i).toString());
+            System.out.println("Fichas de jugador por escalera " + (i + 1) + ": " + players.get(i).toString());
+            trios.organizarPorTrios(players.get(i));
+            System.out.println("Fichas de jugador por trio " + (i + 1) + ": " + players.get(i).toString());
+            System.out.println("");
+            System.out.println("");
+            
         }
 
         ArrayList<ArrayList<String>> tablero = new ArrayList();

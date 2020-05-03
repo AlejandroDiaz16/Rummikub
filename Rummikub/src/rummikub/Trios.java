@@ -14,6 +14,11 @@ import java.util.ArrayList;
 public class Trios {
 
     public void organizarPorTrios(ArrayList<String> jugador) {
+        ArrayList<String> orden = new ArrayList();
+        while (jugador.size() > 0) {
+            orden.add(jugador.remove(0));
+        }
+
         ArrayList<String> color = new ArrayList();
         ArrayList<String> numeros = new ArrayList();
         color.add("A");
@@ -23,46 +28,31 @@ public class Trios {
         for (int i = 1; i <= 13; i++) {
             numeros.add(i + "");
         }
+
         int c0 = 0;
-        for (int k = 0; k < jugador.size(); k++) {
-            if ("C-0".equals(jugador.get(k))) {
-                jugador.remove(k);
-            }
-        }
-        if (c0 != 0) {
-            if (c0 == 1) {
-                jugador.add("C-0");
-            }
-            if (c0 == 2) {
-                jugador.add("C-0");
-                jugador.add("C-0");
-            }
-            c0 = 0;
-        }
+        c0 += orden.remove("C-0") ? 1 : 0;
+        c0 += orden.remove("C-0") ? 1 : 0;
+
         for (int i = 0; i < numeros.size(); i++) {
             for (int j = 0; j < color.size(); j++) {
                 String ficha = color.get(j) + "-" + numeros.get(i);
-                int cantidad = 0;
-                for (int k = 0; k < jugador.size(); k++) {
-                    if (ficha.equals(jugador.get(k))) {
-                        jugador.remove(k);
-                        cantidad++;
-                        k--;
+                if (orden.remove(ficha)) {
+                    jugador.add(ficha);
+                    if (orden.remove(ficha)) {
+                        jugador.add(ficha);
                     }
                 }
-                if (cantidad != 0) {
-                    if (cantidad == 1) {
-                        jugador.add(ficha);
-                    }
-                    if (cantidad == 2) {
-                        jugador.add(ficha);
-                        jugador.add(ficha);
-                    }
-                    cantidad = 0;
-                }
-
             }
         }
+
+        if (c0 == 1) {
+            jugador.add("C-0");
+        }
+        if (c0 == 2) {
+            jugador.add("C-0");
+            jugador.add("C-0");
+        }
+        c0 = 0;
 
     }
 
@@ -118,14 +108,14 @@ public class Trios {
         int puntaje = 0;
         try {
             if (validarTrio(trio2)) {
-                
-            for (int i = 0; i < trio2.size(); i++) {
-                if (!trio2.get(i).equals("C-0")) {
-                    return Integer.parseInt(trio2.get(i).split("-")[1])*(trio2.size());
+
+                for (int i = 0; i < trio2.size(); i++) {
+                    if (!trio2.get(i).equals("C-0")) {
+                        return Integer.parseInt(trio2.get(i).split("-")[1]) * (trio2.size());
+                    }
                 }
-            }
-            return puntaje;
-            }else{
+                return puntaje;
+            } else {
                 return 0;
             }
         } catch (Exception e) {
