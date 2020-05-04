@@ -34,9 +34,9 @@ public class Jugadores {
         return jugadores;
     }
     
-    public void crearJugadores(ArrayList<ArrayList<String>> players, int numeroJugadores){
+    public void crearJugadores(ArrayList<ArrayList<Carta>> players, int numeroJugadores){
         for (int i = 0; i < numeroJugadores; i++) {
-            ArrayList<String> player = new ArrayList<String>();;
+            ArrayList<Carta> player = new ArrayList<Carta>();;
             players.add(player);
         }
         

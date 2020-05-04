@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *
@@ -20,86 +21,112 @@ public class Rummikub {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
-        ArrayList<String> prueba = new ArrayList<>();
-        prueba.add("C-0");
-        prueba.add("C-0");
-        prueba.add("A-3");
-        prueba.add("A-4");
-        prueba.add("A-5");
-        prueba.add("A-6");
-        prueba.add("A-7");
-
-        BufferedReader sc = new BufferedReader(new InputStreamReader(System.in));
         
-        Fichas fichas = new Fichas();
-        Jugadores jugadores = new Jugadores();
-        Escalera escalera = new Escalera();
-        Trios trios=new Trios();
-        //escalera.organizarPorEscalera(prueba);
-        System.out.println(prueba.toString());
-        System.out.println(escalera.validarEscalera(prueba));
-        //acá se obtiene el mazo
-        ArrayList<String> mazo = fichas.obtenerMazo();        
-        System.out.println(mazo.toString());
-        //Cuantas personas van a jugar?
-        int quantityPlayers = jugadores.numeroJugadores();
-        //Se crean los jugadores
-        ArrayList<ArrayList<String>> players = new ArrayList<ArrayList<String>>();
-        jugadores.crearJugadores(players, quantityPlayers);
-        System.out.println("Número de jugadores creados: " + players.size());
-        //Se agregan las fichas a los jugadores
-        fichas.llenarDeFichas(14, players, mazo);
-        System.out.println("Fichas de cada jugador: ");
-        
-        for (int i = 0; i < players.size(); i++) {
-            System.out.println("Fichas de jugador " + (i + 1) + ": " + players.get(i).toString());
-            escalera.organizarPorEscalera(players.get(i));
-            System.out.println("Fichas de jugador por escalera " + (i + 1) + ": " + players.get(i).toString());
-            trios.organizarPorTrios(players.get(i));
-            System.out.println("Fichas de jugador por trio " + (i + 1) + ": " + players.get(i).toString());
-            System.out.println("");
-            System.out.println("");
+        ArrayList<Carta> mazo = new ArrayList<Carta>();
+        mazo.add(new Carta(0, "Comodin"));
+        for (int i = 1; i <= 13; i++) {
+            mazo.add(new Carta(i, "Azul"));
+            mazo.add(new Carta(i, "Azul"));
+            
+            mazo.add(new Carta(i, "Rojo"));
+            mazo.add(new Carta(i, "Rojo"));
+            
+            mazo.add(new Carta(i, "Negro"));
+            mazo.add(new Carta(i, "Negro"));
+            
+            mazo.add(new Carta(i, "Verde"));
+            mazo.add(new Carta(i, "Verde"));
             
         }
-
-        ArrayList<ArrayList<String>> tablero = new ArrayList();
-
-        ArrayList<String> div = new ArrayList<>();
-        div.add("A-3");
-        div.add("C-0");
-        div.add("C-0");
-        ArrayList<String> div2 = new ArrayList<>();
-        div2.add("A-1");
-        div2.add("A-2");
-        div2.add("A-3");
-
-        ArrayList<String> div3 = new ArrayList<>();
-        div3.add("A-1");
-        div3.add("A-2");
-        div3.add("A-3");
-
-        ArrayList<String> div4 = new ArrayList<>();
-        div4.add("A-1");
-        div4.add("A-2");
-        div4.add("A-3");
-
-        ArrayList<String> div5 = new ArrayList<>();
-        div5.add("A-1");
-        div5.add("A-2");
-        div5.add("A-3");
-
-        ArrayList<String> div6 = new ArrayList<>();
-        div6.add("A-1");
-        div6.add("C-0");
-        div6.add("A-3");
-        tablero.add(div);
-        tablero.add(div2);
-        tablero.add(div3);
-        tablero.add(div4);
-        tablero.add(div5);
-        tablero.add(div6);
-        //System.out.println(Tablero.validarTablero(tablero));
-        //System.out.println(Tablero.puntosTablero(tablero));
-
+        mazo.add(new Carta(0, "Comodin"));
+        ArrayList<Carta> baraja1=new ArrayList<>();
+        ArrayList<Carta> baraja2=new ArrayList<>();
+        llenarDeFichas(14, baraja1, mazo);
+        llenarDeFichas(14, baraja2, mazo);
+        Jugador jugador=new Jugador("Ánderson", baraja1);
+        Jugador jugadorPro=new Jugador("Jair", baraja2);
+        ArrayList<Carta> baraja3=new ArrayList<>();
+        
+        baraja3.add(new Carta(0, "Comodin"));
+        baraja3.add(new Carta(0, "Comodin"));
+        baraja3.add(new Carta(0, "Comodin"));
+        baraja3.add(new Carta(0, "Comodin"));
+        baraja3.add(new Carta(0, "Comodin"));
+        baraja3.add(new Carta(0, "Comodin"));
+        baraja3.add(new Carta(0, "Comodin"));
+        baraja3.add(new Carta(0, "Comodin"));
+        baraja3.add(new Carta(0, "Comodin"));
+        baraja3.add(new Carta(0, "Comodin"));
+        baraja3.add(new Carta(0, "Comodin"));
+        baraja3.add(new Carta(11, "Azul"));
+        baraja3.add(new Carta(0, "Comodin"));
+        baraja3.add(new Carta(13, "Azul"));
+        Jugada jugada=new Jugada(baraja3);
+        System.out.println("Vale?: "+jugada.validarJugada()+" \nPuntaje: "+jugada.getPuntaje());
+        Tablero tablero=new Tablero(new ArrayList<Jugada>());
+        
+        
+        ArrayList<Jugada> jugar=new ArrayList<>();
+        ArrayList<Carta> ju1=new ArrayList<>();
+        ju1.add(new Carta(0, "Comodin"));
+        ju1.add(new Carta(0, "Comodin"));
+        ju1.add(new Carta(9, "Azul"));
+        jugar.add(new Jugada(ju1));
+        ArrayList<Carta> ju2=new ArrayList<>();
+        ju2.add(new Carta(11, "Verde"));
+        ju2.add(new Carta(12, "Verde"));
+        ju2.add(new Carta(13, "Verde"));
+        jugar.add(new Jugada(ju2));
+        Tablero tableroPrueba=new Tablero(jugar);
+        System.out.println("Tablero: "+tablero.getJugadas());
+        tablero.actualizarTablero(tableroPrueba, jugador);
+        System.out.println("new Tablero: "+tablero.getJugadas());
+        
+        ArrayList<Jugada> jugar5=new ArrayList<>();
+        ArrayList<Carta> ju5=new ArrayList<>();
+        ju5.add(new Carta(9, "Verde"));
+        ju5.add(new Carta(10, "Verde"));
+        ju5.add(new Carta(0, "Comodin"));
+        jugar5.add(new Jugada(ju1));
+        jugar5.add(new Jugada(ju2));
+        jugar5.add(new Jugada(ju5));
+        
+        Tablero tableroPrueba2=new Tablero(jugar5);
+        //System.out.println(tableroPrueba2.getJugadas());
+        tablero.actualizarTablero(tableroPrueba2, jugadorPro);
+        System.out.println("new Tablero: "+tablero.getJugadas());
+        
+        
+        
+        
+        //tablero.actualizarTablero(,);
+        /*ArrayList<Jugada> jugar2=new ArrayList<>();
+        ArrayList<Carta> ju3=new ArrayList<>();
+        ju3.add(new Carta(0, "Comodin"));
+        ju3.add(new Carta(0, "Comodin"));
+        ju3.add(new Carta(9, "Azul"));
+        jugar2.add(new Jugada(ju3));
+        ArrayList<Carta> ju4=new ArrayList<>();
+        ju4.add(new Carta(11, "Verde"));
+        ju4.add(new Carta(12, "Verde"));
+        ju4.add(new Carta(13, "Verde"));
+        jugar2.add(new Jugada(ju4));
+        Tablero tableroPrueba2=new Tablero(jugar2);
+        System.out.println("Tablero: "+tablero.getJugadas());
+        tablero.actualizarTablero(tableroPrueba2, jugadorPro);
+        System.out.println("new Tablero: "+tablero.getJugadas());
+*/
+    }
+    
+    
+    public static void llenarDeFichas(int numeroDeCartas, ArrayList<Carta> player, ArrayList<Carta> fichas) {
+        for (int i = 0; i < numeroDeCartas; i++) {
+                llenarDeFichas1x1(player, fichas);
+        }
+    }
+    
+    public static void llenarDeFichas1x1(ArrayList<Carta> jugador, ArrayList<Carta> fichas) {
+        Random rd = new Random();
+        jugador.add(fichas.remove(rd.nextInt(fichas.size())));
     }
 }

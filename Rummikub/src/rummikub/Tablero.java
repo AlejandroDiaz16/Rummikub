@@ -12,37 +12,59 @@ import java.util.ArrayList;
  * @author jair-
  */
 public class Tablero {
-    
-    
-    public boolean validarTablero(ArrayList<ArrayList<String>> tablero){
-        Trios trio=new Trios();
-        Escalera escalera=new Escalera();
-        boolean vale=true;
-        for (int i = 0; i < tablero.size(); i++) {
-            ArrayList<String> validar=tablero.get(i);
-            if (!escalera.validarEscalera(validar)) {
-                if (!trio.validarTrio(validar)) {
+
+    private ArrayList<Jugada> jugadas = new ArrayList<>();
+
+    public Tablero(ArrayList<Jugada> jugadas) {
+        this.jugadas = jugadas;
+    }
+
+    public boolean validarTablero() {
+        for (Jugada jugada : jugadas) {
+            if (!jugada.validarJugada()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean validarNuevoTablero(Tablero nuevoTablero, Jugador jugador) {
+
+        if (!jugador.isPrimeraJugada()) {
+            int puntaje = 0;
+            int i = 0;
+            for (i = 0; i < this.jugadas.size(); i++) {;
+                int index = nuevoTablero.jugadas.indexOf(this.jugadas.get(i));
+                if (index == -1) {
                     return false;
                 }
+                nuevoTablero.jugadas.remove(index);
             }
-        }  
-        return vale;
-    }
-    public int puntosTablero(ArrayList<ArrayList<String>> tablero){
-        Trios trio=new Trios();
-        Escalera escalera=new Escalera();
-        int puntuacion=0;
-        if (validarTablero(tablero)) {
-            for (int i = 0; i < tablero.size(); i++) {
-                if (escalera.validarEscalera(tablero.get(i))) {
-                    puntuacion+=escalera.obtenerPuntajeEscalera(tablero.get(i));
-                }else{
-                    puntuacion+=trio.obtenerPuntajeTrio(tablero.get(i));                
+
+            for (Jugada jugada : nuevoTablero.jugadas) {
+                if (!jugada.validarJugada()) {
+                    return false;
                 }
+                puntaje += jugada.getPuntaje();
             }
-        }else{
-            return 0;
+            if (puntaje < 30) {
+                return false;
+            }
+            jugador.setPrimeraJugada(true);
+            nuevoTablero.jugadas.addAll(this.jugadas);
         }
-        return puntuacion;
+        return nuevoTablero.validarTablero();
+
     }
+
+    public void actualizarTablero(Tablero nuevoTablero, Jugador jugador) {
+        if (validarNuevoTablero(nuevoTablero, jugador)) {
+            this.jugadas = nuevoTablero.jugadas;
+        }
+    }
+
+    public ArrayList<Jugada> getJugadas() {
+        return jugadas;
+    }
+
 }
