@@ -7,6 +7,7 @@ package rummikub;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import org.java_websocket.WebSocket;
 
 /**
  *
@@ -16,10 +17,14 @@ public class Jugador {
     private String nombre;
     private boolean primeraJugada=false;
     private ArrayList<Carta> baraja=new ArrayList<>();
-
-    public Jugador(String nombre) {
-        this.nombre=nombre;
+    private WebSocket conn;
+    
+    public Jugador(String nombre, WebSocket conn) {
+        this.nombre = nombre;
+        this.conn = conn;
     }
+    
+    
 
     public String getNombre() {
         return nombre;

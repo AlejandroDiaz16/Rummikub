@@ -8,113 +8,109 @@ package rummikub;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.InetSocketAddress;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.Random;
+import org.java_websocket.WebSocket;
+import org.java_websocket.handshake.ClientHandshake;
+import org.java_websocket.server.WebSocketServer;
+import org.json.JSONObject;
 
 /**
  *
  * @author jair-
  */
-public class Rummikub {
+public class Rummikub extends WebSocketServer {
 
-    /**
-     * @param args the command line arguments
-     */
+    private static Hashtable<String, Sala> salas = new Hashtable<>();
+    private static ArrayList<Carta> cartas = new ArrayList<>();
+    
+    public Rummikub(int port) {
+        super(new InetSocketAddress(port));
+    }
+    
     public static void main(String[] args) throws IOException {
-        BufferedReader sc = new BufferedReader(new InputStreamReader(System.in));
-        
-        ArrayList<Carta> mazo = new ArrayList<Carta>();
-        mazo.add(new Carta(0, "Red-Face"));
+        cartas.add(new Carta(0, "Red-Face"));
         for (int i = 1; i <= 13; i++) {
-            mazo.add(new Carta(i, "Blue"));
-            mazo.add(new Carta(i, "Blue"));
+            cartas.add(new Carta(i, "Blue"));
+            cartas.add(new Carta(i, "Blue"));
 
-            mazo.add(new Carta(i, "Red"));
-            mazo.add(new Carta(i, "Red"));
+            cartas.add(new Carta(i, "Red"));
+            cartas.add(new Carta(i, "Red"));
 
-            mazo.add(new Carta(i, "Black"));
-            mazo.add(new Carta(i, "Black"));
+            cartas.add(new Carta(i, "Black"));
+            cartas.add(new Carta(i, "Black"));
 
-            mazo.add(new Carta(i, "Yellow"));
-            mazo.add(new Carta(i, "Yellow"));
+            cartas.add(new Carta(i, "Yellow"));
+            cartas.add(new Carta(i, "Yellow"));
         }
-        mazo.add(new Carta(0, "Black-Face"));
-        Sala sala=new Sala(mazo);
-        
-        //ACÁ SE RECIBEN LOS JUGADORES
-        ArrayList<String> arregloNombres=new ArrayList<>();
-        System.out.println("Esperando jugadores... ");
-        int i=0;
-        for (i = 0; i < 4; i++) {
-            System.out.println("Nombre jugador #"+(i+1)+": ");
-            String nombreJugador=sc.readLine();
-            if (nombreJugador.equals("")) {
-                break;
+        cartas.add(new Carta(0, "Black-Face"));
+    }
+
+    @Override
+    public void onOpen(WebSocket clientSocket, ClientHandshake ch) {
+
+    }
+
+    @Override
+    public void onClose(WebSocket clientSocket, int i, String string, boolean bln) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void onMessage(WebSocket clientSocket, String json) {
+        JSONObject request = new JSONObject(json);
+        JSONObject response = new JSONObject();
+        try {
+            String type = request.getString("type");
+            if (type.equalsIgnoreCase("createRoom")) {
+                String nombre = request.getString("playerName");
+                Sala sala = new Sala((ArrayList<Carta>) cartas.clone());
+                Jugador jugador = new Jugador(nombre, clientSocket);
+                sala.addJugador(jugador);
+                String idSala = null;
+                do {
+                    idSala = createSalaId();
+                } while (salas.containsKey(idSala));
+                salas.put(idSala, sala);
+            }else if (type.equalsIgnoreCase("keepAlive")){
+                response.put("type", type);
+                response.put("data", "Ok");
+            }else {
+                response.put("type", "Error");
+                response.put("data", "Bad Request");
             }
-            sala.addJugador(new Jugador(nombreJugador));
-            arregloNombres.add(nombreJugador);
+            clientSocket.send(response.toString());
+        } catch (Exception e) {
         }
-        System.out.println("Hay "+(i)+" en la sala");
-        
-        //FIN
-        //ACÁ INICIA LA SALA
-        System.out.println("Iniciando juego...");
-        sala.iniciarJuego();
-        //FIN
-        //ACÁ MUESTRA LOS MAZOS
-        for (int j = 0; j < i; j++) {
-            System.out.println("Baraja del jugador "+(j+1));
-            System.out.println(sala.getJugadores(arregloNombres.get(j)).getBaraja().toString());
-        }
-        //FIN
-        //ACÁ SE MUESTRA EL TABLERO
-        System.out.println("Tablero");
-        System.out.println(sala.tablero.getJugadas().toString());
-        //FIN
-        //ACÁ SE VA A AGREGAR ALGO AL TABLERO
-        
-        //FIN
-        
-        /*while (sala.getMazo().size()>0) {            
-            System.out.println("Turno del jugador: ");
-        }*/
-//CREACIÓN DEL MAZO
-        
-        
-        
-        
-        
-        /*
+    }
 
-        System.out.println("Por favor añada el número de jugadores: ");
-        
-        ArrayList<Jugador> jugadoresJuego=new ArrayList<>();
-        
-        int jugadores = Integer.parseInt(sc.readLine());
-        for (int i = 0; i < jugadores; i++) {
-            ArrayList<Carta> baraja = new ArrayList<>();
-            llenarDeFichas(14, baraja, mazo);
-            System.out.println("Nombre jugador #"+(i+1)+": ");
-            Jugador jugador = new Jugador(sc.readLine(), baraja);
-            jugadoresJuego.add(jugador);
+    private String createSalaId() {
+        Random random = new Random();
+        String toReturn = "";
+        for (int i = 0; i < 15; i++) {
+            int type = random.nextInt(3);
+            switch (type) {
+                case 0: {
+                    toReturn += (char) random.nextInt(10) + 48;
+                    break;
+                }
+                case 1: {
+                    toReturn += (char) random.nextInt(26) + 65;
+                    break;
+                }
+                case 2: {
+                    toReturn += (char) random.nextInt(26) + 97;
+                    break;
+                }
+            }
         }
-        int opcionMenu=-1;
-        while (opcionMenu!=0) {            
-            System.out.println("BIENVENIDO\nseleccione un jugador: ");
-            for (int i = 0; i < jugadoresJuego.size(); i++) {
-                System.out.println("Jugador #"+(i+1)+": "+jugadoresJuego.get(i).getNombre());
-            }
-            System.out.println("Salir #0");
-            opcionMenu=Integer.parseInt(sc.readLine());
-            if (opcionMenu==0 || opcionMenu>jugadoresJuego.size()) {
-                continue;
-            }
-            System.out.println("1. Añadir carta a mazo");
-            System.out.println("2. Crear Jugada");
-            System.out.println("0. Volver");
-            
-            
-        }*/
-        
+        return toReturn;
+    }
+
+    @Override
+    public void onError(WebSocket clientSocket, Exception excptn) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

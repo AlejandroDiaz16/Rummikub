@@ -14,9 +14,9 @@ import java.util.Random;
  * @author jair-
  */
 public class Sala {
-    Hashtable<String, Jugador> jugadores = new Hashtable<String, Jugador>();
-    Tablero tablero = new Tablero();
-    ArrayList<Carta> mazo;
+    private Hashtable<String, Jugador> jugadores = new Hashtable<String, Jugador>();
+    private Tablero tablero = new Tablero();
+    private ArrayList<Carta> mazo;
    
     public Sala(ArrayList<Carta> mazo) {
         super();
