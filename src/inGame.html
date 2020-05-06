@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="./style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="./script.js"></script>
+    <script type="text/javascript" src="./inGameScript.js"></script>
 </head>
 <body onload="init()">
 <div class="container gameBackground">
@@ -81,14 +81,14 @@
 
     </div>
     <div class=" claseNueva">
-        <div><img class="iconTam" src="./img/icons/moreCards.png"></div>
-        <div><img class="iconTam" src="./img/icons/check.png"></div>
-        <div><img class="iconTam" src="./img/icons/moreCards.png"></div>
-        <div><img class="iconTam" src="./img/icons/check.png"></div>
+        <div><img class="iconTam" onclick="orderByColor();" src="https://i.ibb.co/gT6dTyQ/orden.jpg" alt="orden"></div>
+        <div><img class="iconTam" onclick="normalOrder();" src="https://i.ibb.co/BV2YwTS/orden-Color.jpg"></div>
+        <div><img class="iconTam" onclick="extraCard();" src="https://i.ibb.co/YcDFxH5/more-Cards.png" alt="more-Cards"></div>
+        <div><img class="iconTam" onclick="checkMove();" src="https://i.ibb.co/nCQmBz3/check.png" alt="check"></div>
     </div>
 
     <footer>
-        <div class="connected-sortable droppable-area2 colTam marginFoot">
+        <div id="cardsOnHand" class="connected-sortable droppable-area2 colTam marginFoot">
             <div class="draggable-item "><img class="handCards cardsTam" src="./img/cards/cardBlack10.jpeg"></div>
             <div class="draggable-item "><img class="handCards cardsTam" src="./img/cards/cardBlack10.jpeg"></div>
             <div class="draggable-item "><img class="handCards cardsTam" src="./img/cards/cardBlack10.jpeg"></div>

@@ -3,7 +3,9 @@
 <head>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="style.css">
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="./homeScript.js"></script>
 	<title>Juego</title>
 </head>
 <body>
@@ -12,24 +14,24 @@
 	<div class="row playersDash">
 		<div class="col-auto mb-3 ">
 			<div class="card playerCard" style="width: 18rem;">
-				<img src="./img/players/player1Image.png" class="card-img-top maxTam" alt="...">
+				<img src="https://i.ibb.co/Q8qYT9q/player1img.jpg" class="card-img-top maxTam maxTamCardPlayer" alt="player1img">
 				<div class="card-body">
 					<h5 class="card-title">Player 1</h5>
-					<a href="#" class="btn btn-primary">Start</a>
+					<a id="changeState1" onclick="statusPlayer1();" class="btn btn-primary">Ready</a>
 				</div>
-				<div class="card-footer text-muted">
-					waiting
+				<div class="card-footer text-muted" id="statusPlayer1">
+					I'm not ready
 				</div>
 			</div>
 		</div>
 		<div class="col-auto mb-3 ">
 			<div class="card playerCard" style="width: 18rem;">
-				<img src="./img/players/player2Image.png" class="card-img-top maxTam" alt="...">
+				<img src="https://i.ibb.co/8Mdp2pX/player2img.jpg" alt="player2img" class="card-img-top maxTam maxTamCardPlayer" >
 				<div class="card-body">
 					<h5 class="card-title">Player 2</h5>
-					<a href="#" class="btn btn-primary">Ready</a>
+					<a id="changeState2" onclick="statusPlayer2();" class="btn btn-primary">Ready</a>
 				</div>
-				<div class="card-footer text-muted">
+				<div class="card-footer text-muted" id="statusPlayer2">
 					waiting
 				</div>
 			</div>
@@ -37,12 +39,12 @@
 
 		<div class="col-auto mb-3 ">
 			<div class="card playerCard" style="width: 18rem;">
-				<img src="./img/players/player3Image.png" class="card-img-top maxTam" alt="...">
+				<img src="https://i.ibb.co/HhGJ32Y/player3img.jpg" alt="player3img" class="card-img-top maxTam maxTamCardPlayer">
 				<div class="card-body">
 					<h5 class="card-title">Player 3</h5>
-					<a href="#" class="btn btn-primary">Ready</a>
+					<a id="changeState3" onclick="statusPlayer3();" class="btn btn-primary">Ready</a>
 				</div>
-				<div class="card-footer text-muted">
+				<div class="card-footer text-muted" id="statusPlayer3">
 					Not Ready yet
 				</div>
 			</div>
@@ -50,16 +52,20 @@
 
 		<div class="col-auto mb-3 ">
 			<div class="card playerCard" style="width: 18rem;">
-				<img src="./img/players/player4Image.png" class="card-img-top maxTam" alt="...">
+				<img src="https://i.ibb.co/68QvxPW/player4img.jpg" alt="player4img" class="card-img-top maxTam maxTamCardPlayer" >
 				<div class="card-body">
 					<h5 class="card-title">Player 4</h5>
-					<a href="#" class="btn btn-primary">Ready</a>
+					<a id="changeState4" onclick="statusPlayer4();" class="btn btn-primary">Ready</a>
 				</div>
-				<div class="card-footer text-muted">
+				<div class="card-footer text-muted" id="statusPlayer4">
 					Not Ready yet
 				</div>
 			</div>
 		</div>
+	</div>
+	<div class="startTheGame">
+		<a onclick="startGame();" class="btn btn-primary">Start The Game</a>
+				</div>
 	</div>
 </div>
 

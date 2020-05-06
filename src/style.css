@@ -32,6 +32,10 @@ footer {
 	max-width: 200px !important;
 }
 
+.maxTamCardPlayer {
+	max-height: 170px;
+}
+
 .gameBackground {
 	background: #008000;
 	max-width: 100% !important;
@@ -102,6 +106,7 @@ footer {
 
 .iconTam {
 	width: 90%;
+	border-radius: 20px;
 	max-width: 110px;
 	max-height: 110px;
 }
@@ -122,3 +127,15 @@ footer .cardsTam {
 	width: 60px;
 	height: 120px;
 }
+
+
+.startTheGame {
+	text-align-last: center;
+	margin: 10%;
+}
+
+.startTheGame a {
+	height: 50px;
+	width: 180px;
+}
+
