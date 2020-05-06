@@ -17,27 +17,27 @@ public class Sala {
     Hashtable<String, Jugador> jugadores = new Hashtable<String, Jugador>();
     Tablero tablero = new Tablero();
     ArrayList<Carta> mazo;
-    
-    public Sala(Tablero tablero, ArrayList<Carta> mazo) {
-		super();
-		this.tablero = tablero;
-		this.mazo = mazo;
-	}
 
-	public Carta getCarta() {
-    	Random rd = new Random();
-    	int index = rd.nextInt(mazo.size());
+    public Sala(Tablero tablero, ArrayList<Carta> mazo) {
+        super();
+        this.tablero = tablero;
+        this.mazo = mazo;
+    }
+
+    public Carta getCarta() {
+        Random rd = new Random();
+        int index = rd.nextInt(mazo.size());
         return mazo.get(index);
     }
-    
+
     public void iniciarJuego() {
-    	jugadores.forEach((nombre, jugador) -> {
-    		for (int i = 0; i < 14; i++) {
-				jugador.addCarta(getCarta());
-			}
-    	});
+        jugadores.forEach((nombre, jugador) -> {
+            for (int i = 0; i < 14; i++) {
+                jugador.addCarta(getCarta());
+            }
+        });
     }
-    
+
     public Jugador getJugadores(String nombre) {
         return jugadores.get(nombre);
     }
@@ -49,6 +49,6 @@ public class Sala {
     public ArrayList<Carta> getMazo() {
         return mazo;
     }
-    
 
+    
 }
