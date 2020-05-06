@@ -40,6 +40,10 @@ public class Sala {
     public Jugador getJugadores(String nombre) {
         return jugadores.get(nombre);
     }
+    
+    public void addJugador(Jugador jugador) {
+    	jugadores.put(jugador.getNombre(), jugador);
+    }
 
     public Tablero getTablero() {
         return tablero;
