@@ -14,10 +14,11 @@ import java.util.Random;
  * @author jair-
  */
 public class Sala {
+
     private Hashtable<String, Jugador> jugadores = new Hashtable<String, Jugador>();
     private Tablero tablero = new Tablero();
     private ArrayList<Carta> mazo;
-   
+
     public Sala(ArrayList<Carta> mazo) {
         super();
         this.mazo = mazo;
@@ -36,11 +37,11 @@ public class Sala {
             }
         });
     }
-    
+
     public boolean isPlayerExist(String nombre) {
         return jugadores.containsKey(nombre);
     }
-    
+
     public Jugador getJugador(String nombre) {
         return jugadores.get(nombre);
     }
@@ -55,6 +56,10 @@ public class Sala {
 
     public ArrayList<Carta> getMazo() {
         return mazo;
+    }
+
+    public Hashtable<String, Jugador> getJugadores() {
+        return jugadores;
     }
 
 }

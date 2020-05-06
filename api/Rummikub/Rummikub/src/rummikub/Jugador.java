@@ -18,13 +18,28 @@ public class Jugador {
     private boolean primeraJugada=false;
     private ArrayList<Carta> baraja=new ArrayList<>();
     private WebSocket conn;
+    private boolean ready;
     
     public Jugador(String nombre, WebSocket conn) {
         this.nombre = nombre;
         this.conn = conn;
     }
+
+    public boolean isReady() {
+        return ready;
+    }
+
+    public void setReady(boolean ready) {
+        this.ready = ready;
+    }
     
+    public void setConn(WebSocket conn) {
+        this.conn = conn;
+    }
     
+    public WebSocket getConn() {
+        return conn;
+    }
 
     public String getNombre() {
         return nombre;
