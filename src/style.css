@@ -88,8 +88,14 @@ footer {
 	display: flex;
 }
 
+#cardsGame {
+	display: flex;
+	flex-wrap: wrap;
+}
+
 .tableCards {
 	width: 80%;
+	height: 66vh;
 	display: flex;
 	flex-wrap: wrap;
 	align-content: flex-start;
@@ -139,3 +145,31 @@ footer .cardsTam {
 	width: 180px;
 }
 
+.newRow {
+	width: 100%;
+	min-height: 130px;
+	background-color: gray;
+
+    margin-left: 0px;
+    border: 10px solid;
+    border-bottom: 15px solid;
+    border-image: url(./img/fondoMadera.jpg) 30 30 round;
+    margin-right: 0;}
+
+#tableGame > div {
+	width: 100% !important;
+}
+
+#tableGame {
+	display: flex;
+	flex-wrap: wrap;
+	align-content: space-between;
+}
+
+.droppable-image {
+	background-image: url("./img/addCard.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 40% 100%;
+}

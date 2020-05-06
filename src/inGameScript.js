@@ -1,4 +1,10 @@
 init();
+
+var card = new Object();
+card.color = "";
+card.value = 0;
+
+
 function init() {
     $( ".droppable-area1, .droppable-area2" ).sortable({
         connectWith: ".connected-sortable",
@@ -9,13 +15,32 @@ function init() {
 
 $(document).ready(function(){
     $(".draggable").draggable();
-    $(".droppable").droppable({
+    $(".hola21").droppable({
+         over: function(event, ui){
+            $(this).addClass("droppable-image");
+        },
+        out: function(event, ui) {
+             $(this).removeClass("droppable-image");
+            },
         drop: function(e, ui){
-            console.log("aqui si");
-
+            addSection(ui.draggable.html()); 
+            $(this).removeClass("droppable-image");
         }
     });
 });
+
+/*get data*/
+
+function getData(){
+    var element = document.getElementById("cardsGame");
+    var jsonObject = {};
+
+    jsonObject.id = element.id;
+    jsonObject.innerHTML = element.innerHTML;
+    console.log(jsonObject);
+}
+
+
 
 /*Game functions*/
 
@@ -24,10 +49,11 @@ function orderByColor(){
 }
 
 function normalOrder(){
-    console.log("normalOrder");
+    console.log(cards);
 }
 
-function extraCard(){
+function extraCard(cardName){
+    addToHand(cardName);
     console.log("extraCard");
 }
 
@@ -39,6 +65,15 @@ function addToHand(cardName){
     var card = callCard(cardName);
     //document.getElementById('#cardsOnHand')
     $('#cardsOnHand').append(card);
+}
+
+/*addSection*/
+function addSection(card){
+   
+    var newRow = '<div class="connected-sortable droppable-area1 colTam"> <div class="draggable-item ">'+card+'</div></div>';
+    $("#cardsGame").append(newRow);
+    $(".newRow").html("");
+    init();
 }
 
 
