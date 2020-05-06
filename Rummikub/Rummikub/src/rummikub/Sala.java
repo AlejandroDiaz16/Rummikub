@@ -18,9 +18,8 @@ public class Sala {
     Tablero tablero = new Tablero();
     ArrayList<Carta> mazo;
     
-    public Sala(Tablero tablero, ArrayList<Carta> mazo) {
+    public Sala(ArrayList<Carta> mazo) {
 		super();
-		this.tablero = tablero;
 		this.mazo = mazo;
 	}
 
