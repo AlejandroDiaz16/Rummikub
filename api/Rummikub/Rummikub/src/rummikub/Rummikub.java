@@ -25,11 +25,11 @@ public class Rummikub extends WebSocketServer {
 
     private static Hashtable<String, Sala> salas = new Hashtable<>();
     private static ArrayList<Carta> cartas = new ArrayList<>();
-    
+
     public Rummikub(int port) {
         super(new InetSocketAddress(port));
     }
-    
+
     public static void main(String[] args) throws IOException {
         cartas.add(new Carta(0, "Red-Face"));
         for (int i = 1; i <= 13; i++) {
@@ -46,6 +46,8 @@ public class Rummikub extends WebSocketServer {
             cartas.add(new Carta(i, "Yellow"));
         }
         cartas.add(new Carta(0, "Black-Face"));
+        Rummikub server = new Rummikub(8500);
+        server.start();
     }
 
     @Override
@@ -62,10 +64,12 @@ public class Rummikub extends WebSocketServer {
     public void onMessage(WebSocket clientSocket, String json) {
         JSONObject request = new JSONObject(json);
         JSONObject response = new JSONObject();
+        JSONObject dataRequest = new JSONObject((new JSONObject(request.get("data"))).toString());
+        JSONObject dataResponse = new JSONObject();
         try {
             String type = request.getString("type");
             if (type.equalsIgnoreCase("createRoom")) {
-                String nombre = request.getString("playerName");
+                String nombre = dataRequest.getString("playerName");
                 Sala sala = new Sala((ArrayList<Carta>) cartas.clone());
                 Jugador jugador = new Jugador(nombre, clientSocket);
                 sala.addJugador(jugador);
@@ -75,16 +79,38 @@ public class Rummikub extends WebSocketServer {
                 } while (salas.containsKey(idSala));
                 salas.put(idSala, sala);
                 response.put("type", type);
-                response.put("data", "Ok");
-            }else if (type.equalsIgnoreCase("keepAlive")){
+                dataResponse.put("room", idSala);
+                dataResponse.put("message", "200 OK");
+                response.put("data", dataResponse.toString());
+            } else if (type.equalsIgnoreCase("joinToRoom")) {
+                String nombre = dataRequest.getString("playerName");
+                String idSala = dataRequest.getString("room");
+                Sala sala = salas.get(idSala);
+                String message = "";
+                if (sala == null) {
+                    message = "Romm doesn't exist";
+                }else {
+                    if (sala.isPlayerExist(nombre)) {
+                        message = "Player is already in room";
+                    }else {
+                        message = "200 OK";
+                    }
+                }
+                dataResponse.put("message", message);
                 response.put("type", type);
-                response.put("data", "Ok");
-            }else {
+                response.put("data", dataResponse.toString());
+            } else if (type.equalsIgnoreCase("keepAlive")) {
+                response.put("type", type);
+                dataResponse.put("message", "Ok");
+                response.put("data", dataResponse.toString());
+            } else {
                 response.put("type", "Error");
-                response.put("data", "Bad Request");
+                dataResponse.put("message", "Bad request");
+                response.put("data", dataResponse.toString());
             }
             clientSocket.send(response.toString());
         } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
         }
     }
 

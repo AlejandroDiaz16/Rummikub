@@ -36,8 +36,12 @@ public class Sala {
             }
         });
     }
-
-    public Jugador getJugadores(String nombre) {
+    
+    public boolean isPlayerExist(String nombre) {
+        return jugadores.containsKey(nombre);
+    }
+    
+    public Jugador getJugador(String nombre) {
         return jugadores.get(nombre);
     }
 
