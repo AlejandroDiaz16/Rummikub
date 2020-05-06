@@ -9,6 +9,9 @@ webSocket.onopen = function(evt) {
 	keepCon = setInterval(keepAlive, 10000);
 }
 
+localStorage.setItem("a", 'basdasd');
+console.log(localStorage.getItem("a"));
+
 function keepAlive() {
 	request = {
 		type: 'keepAlive',
