@@ -26,7 +26,7 @@ public class Sala {
     public Carta getCarta() {
         Random rd = new Random();
         int index = rd.nextInt(mazo.size());
-        return mazo.get(index);
+        return mazo.remove(index);
     }
 
     public void iniciarJuego() {

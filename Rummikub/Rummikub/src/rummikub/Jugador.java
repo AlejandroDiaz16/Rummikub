@@ -17,9 +17,8 @@ public class Jugador {
     private boolean primeraJugada=false;
     private ArrayList<Carta> baraja=new ArrayList<>();
 
-    public Jugador(String nombre ,ArrayList<Carta> baraja) {
+    public Jugador(String nombre) {
         this.nombre=nombre;
-        this.baraja=baraja;
     }
 
     public String getNombre() {
@@ -58,6 +57,10 @@ public class Jugador {
     			return carta1.getColor().compareToIgnoreCase(carta2.getColor());
     		}else return caso1;
     	});
+    }
+
+    public ArrayList<Carta> getBaraja() {
+        return baraja;
     }
     
 
