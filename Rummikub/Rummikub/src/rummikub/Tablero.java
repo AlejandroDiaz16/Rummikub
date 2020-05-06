@@ -18,8 +18,12 @@ public class Tablero {
     public Tablero(ArrayList<Jugada> jugadas) {
         this.jugadas = jugadas;
     }
+    
+    public Tablero() {
+		super();
+	}
 
-    public boolean validarTablero() {
+	public boolean validarTablero() {
         for (Jugada jugada : jugadas) {
             if (!jugada.validarJugada()) {
                 return false;
