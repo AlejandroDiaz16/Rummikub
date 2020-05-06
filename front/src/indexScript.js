@@ -9,8 +9,6 @@ webSocket.onopen = function(evt) {
 	keepCon = setInterval(keepAlive, 10000);
 }
 
-localStorage.setItem("a", 'basdasd');
-console.log(localStorage.getItem("a"));
 
 function keepAlive() {
 	request = {
@@ -26,11 +24,9 @@ webSocket.onmessage = function(JSONResponse){
 	
 	if(response.type == "createRoom"){
 		answerPetition=response.data.room;
-
-		Cookies.set('playerName',namePlayer);
-		Cookies.set('playerRoom',answerPetition);
-		console.log("affff");
-		console.log(Cookies.get('playerName'));
+		localStorage.setItem("playerName",namePlayer);
+		localStorage.setItem("playerRoom",answerPetition);
+		//console.log(localStorage.getItem("playerName"));
 	}
 	else if(response.type == "joinToRoom"){
 		if(response.data.message == "200 OK"){statusPetition=response.data.message;}
@@ -51,7 +47,7 @@ function createGame(){
 		}
 	}
 	webSocket.send(JSON.stringify(request));
-	//window.location.href="room.html";
+	window.location.href="room.html";
 }
 
 

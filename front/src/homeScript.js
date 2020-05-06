@@ -28,15 +28,29 @@ webSocket.onmessage = function(JSONResponse){
 
 /*functions*/
 
-/*function loadOwner(){
-
-	request={
+function updateSocketPlayer(){
+	var namePlayer=localStorage.getItem("playerName");
+	var roomPlayer= localStorage.getItem("playerRoom");
+	request = {
 		type: 'setSocketPlayer',
 		data: {
-			playerName:
+			playerName: namePlayer,
+			room: roomPlayer
 		}
 	}
-}*/
+	webSocket.send(JSON.stringify(request));
+}
+
+function getPlayersInfo(){
+	var roomPlayer= localStorage.getItem("playerRoom");
+	request = {
+		type: 'getPlayersByRoom',
+		data: {
+			room: roomPlayer
+		}
+	}
+
+}
 
 function startGame(){
 	
