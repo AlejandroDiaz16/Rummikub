@@ -1,14 +1,45 @@
-var StP1=0;
-var StP2=0;
-var StP3=0;
-var StP4=0;
 
+var apiURL = "ws://25.133.184.153:12500";
+var webSocket = new WebSocket(apiURL);
+var keepCon;
+var answerPetition;
+var statusPetition;
+
+
+/*connections*/
+webSocket.onopen = function(evt) {
+	keepCon = setInterval(keepAlive, 10000);
+}
+
+function keepAlive() {
+	request = {
+		type: 'keepAlive',
+		data: {}
+	}
+	webSocket.send(JSON.stringify(request));
+}
+
+webSocket.onmessage = function(JSONResponse){
+	var response = JSON.parse(JSONResponse.data);
+
+}
+
+
+
+/*functions*/
+
+/*function loadOwner(){
+
+	request={
+		type: 'setSocketPlayer',
+		data: {
+			playerName:
+		}
+	}
+}*/
 
 function startGame(){
-	var num =StP1+StP2+StP3+StP4; 
-	if (num >= 2) {
-		alert("empieza el juego con: "+num+" jugadores");
-	}else{alert("El juego no puede empezar con menos de 2 jugadores");}
+	
 }
 
 function statusPlayer1(){
