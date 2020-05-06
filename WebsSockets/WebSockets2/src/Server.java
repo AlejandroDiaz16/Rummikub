@@ -16,9 +16,28 @@ import org.java_websocket.server.WebSocketServer;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import rummikub.Carta;
+import rummikub.Jugador;
+import rummikub.Rummikub;
+import rummikub.Sala;
+
 
 public class Server extends WebSocketServer{
+	
+	//*********************************
+	//*********************************
+	 
+	//*********************************
+	//*********************************
+	
+	
+	
+	
+	
+	
+	
 	private static Map<String,WebSocket> Users = new HashMap<>();
+	
 	private static List<WebSocket> clients=new ArrayList<WebSocket>();
 
     public Server() {
@@ -39,6 +58,7 @@ public class Server extends WebSocketServer{
                 String username = obj.getString("username");
                 Users.put(username, conn);
                 System.out.println(username + " se ha conectado");
+                
             } else if (obj.getString("type").equalsIgnoreCase("alive")) {
                 System.out.println(conn.getLocalSocketAddress().getHostName() + " is alive");
             }
@@ -118,9 +138,14 @@ public class Server extends WebSocketServer{
     }
 
     public static void main(String[] args) {
-        Server server = new Server();
+    	
+    	Server server = new Server();
         server.start();
+        
+        
     }
+    
+    
 
 
 }

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="Rummikub/Rummikub/src"/>
+	<classpathentry kind="src" path="WebsSockets/WebSockets2/src"/>
+	<classpathentry kind="lib" path="WebsSockets/WebSockets2/Java-WebSocket-1.3.0.jar"/>
+	<classpathentry kind="lib" path="WebsSockets/WebSockets2/json-20190722.jar"/>
+	<classpathentry kind="output" path="Rummikub/Rummikub/build/classes"/>
+</classpath>
