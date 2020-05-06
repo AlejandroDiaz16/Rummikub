@@ -17,10 +17,9 @@ public class Sala {
     Hashtable<String, Jugador> jugadores = new Hashtable<String, Jugador>();
     Tablero tablero = new Tablero();
     ArrayList<Carta> mazo;
-
-    public Sala(Tablero tablero, ArrayList<Carta> mazo) {
+   
+    public Sala(ArrayList<Carta> mazo) {
         super();
-        this.tablero = tablero;
         this.mazo = mazo;
     }
 
@@ -42,6 +41,10 @@ public class Sala {
         return jugadores.get(nombre);
     }
 
+    public void addJugador(Jugador jugador) {
+        jugadores.put(jugador.getNombre(), jugador);
+    }
+
     public Tablero getTablero() {
         return tablero;
     }
@@ -50,5 +53,4 @@ public class Sala {
         return mazo;
     }
 
-    
 }
