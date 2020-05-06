@@ -74,6 +74,8 @@ public class Rummikub extends WebSocketServer {
                     idSala = createSalaId();
                 } while (salas.containsKey(idSala));
                 salas.put(idSala, sala);
+                response.put("type", type);
+                response.put("data", "Ok");
             }else if (type.equalsIgnoreCase("keepAlive")){
                 response.put("type", type);
                 response.put("data", "Ok");
