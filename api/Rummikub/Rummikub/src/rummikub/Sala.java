@@ -7,7 +7,9 @@ package rummikub;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Map;
 import java.util.Random;
+import org.java_websocket.WebSocket;
 
 /**
  *
@@ -36,6 +38,16 @@ public class Sala {
                 jugador.addCarta(getCarta());
             }
         });
+    }
+
+    public Jugador getJugadorBySocket(WebSocket webSocketClient) {
+        for (Map.Entry<String, Jugador> entry : jugadores.entrySet()) {
+            Jugador jugador = entry.getValue();
+            if (jugador.getConn().equals(webSocketClient)) {
+                return jugador;
+            }
+        }
+        return null;
     }
 
     public boolean isPlayerExist(String nombre) {
