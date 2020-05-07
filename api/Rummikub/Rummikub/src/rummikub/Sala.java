@@ -20,7 +20,8 @@ public class Sala {
     private Hashtable<String, Jugador> jugadores = new Hashtable<String, Jugador>();
     private Tablero tablero = new Tablero();
     private ArrayList<Carta> mazo;
-
+    private boolean gameStarted = false;
+    
     public Sala(ArrayList<Carta> mazo) {
         super();
         this.mazo = mazo;
@@ -40,6 +41,14 @@ public class Sala {
         });
     }
 
+    public boolean isGameStarted() {
+        return gameStarted;
+    }
+
+    public void setGameStarted(boolean gameStarted) {
+        this.gameStarted = gameStarted;
+    }
+    
     public Jugador getJugadorBySocket(WebSocket webSocketClient) {
         for (Map.Entry<String, Jugador> entry : jugadores.entrySet()) {
             Jugador jugador = entry.getValue();

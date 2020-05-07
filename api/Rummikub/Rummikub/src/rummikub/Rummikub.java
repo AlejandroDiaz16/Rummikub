@@ -228,6 +228,8 @@ public class Rummikub extends WebSocketServer {
         String message = "";
         if (sala == null) {
             message = "Room doesn't exist";
+        } else if (sala.isGameStarted()) {
+            message = "This room has already started";
         } else {
             boolean isPlayersReady = true;
             message = "200 OK";
@@ -259,6 +261,8 @@ public class Rummikub extends WebSocketServer {
         String message = "";
         if (sala == null) {
             message = "Room doesn't exist";
+        } else if (sala.isGameStarted()) {
+            message = "This room has already started";
         } else {
             Jugador jugador = sala.getJugadorBySocket(webSockerClient);
             if (jugador == null) {
@@ -287,6 +291,8 @@ public class Rummikub extends WebSocketServer {
         String message = "";
         if (sala == null) {
             message = "Romm doesn't exist";
+        } else if (sala.isGameStarted()) {
+            message = "This room has already started";
         } else {
             Jugador jugador = sala.getJugador(nombre);
             if (jugador == null) {
@@ -307,12 +313,15 @@ public class Rummikub extends WebSocketServer {
         String message = "";
         if (sala == null) {
             message = "Room doesn't exist";
+        } else if (sala.isGameStarted()) {
+            message = "This room has already started";
         } else {
             ArrayList<JSONObject> jugadores = new ArrayList<>();
             sala.getJugadores().forEach((nombre, jugador) -> {
                 JSONObject JSONJugador = new JSONObject();
                 JSONJugador.put("playerName", nombre);
                 JSONJugador.put("state", jugador.isReady());
+                JSONJugador.put("isTurn", jugador.isTurn());
                 jugadores.add(JSONJugador);
             });
             dataResponse.put("playersInfo", jugadores);
@@ -343,6 +352,8 @@ public class Rummikub extends WebSocketServer {
         String message = "";
         if (sala == null) {
             message = "Romm doesn't exist";
+        } else if (sala.isGameStarted()) {
+            message = "This room has already started";
         } else {
             if (sala.isPlayerExist(nombre)) {
                 message = "Player is already in room";
@@ -372,6 +383,8 @@ public class Rummikub extends WebSocketServer {
         String message = "";
         if (sala == null) {
             message = "Romm doesn't exist";
+        } else if (sala.isGameStarted()) {
+            message = "This room has already started";
         } else {
             message = "200 OK";
             dataResponse.put("board", sala.getTablero());

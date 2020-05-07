@@ -19,6 +19,7 @@ public class Jugador {
     private ArrayList<Carta> baraja=new ArrayList<>();
     private WebSocket conn;
     private boolean ready;
+    private boolean turn = false;
     
     public Jugador(String nombre, WebSocket conn) {
         this.nombre = nombre;
@@ -35,6 +36,14 @@ public class Jugador {
     
     public void setConn(WebSocket conn) {
         this.conn = conn;
+    }
+
+    public boolean isTurn() {
+        return turn;
+    }
+
+    public void setTurn(boolean turn) {
+        this.turn = turn;
     }
     
     public WebSocket getConn() {
