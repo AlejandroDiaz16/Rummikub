@@ -70,7 +70,8 @@ $(document).ready(function(){
              $(this).removeClass("droppable-image");
             },
         drop: function(e, ui){
-            addSection(ui.draggable.html()); 
+            console.log(ui.draggable);
+            addSection(ui.draggable); 
             $(this).removeClass("droppable-image");
         }
     });
@@ -156,7 +157,14 @@ function addToHand(cardName){
 /*addSection*/
 function addSection(card){
    
-    var newRow = '<div class="connected-sortable droppable-area1 colTam"> <div class="draggable-item ">'+card+'</div></div>';
+    var newRow =$('<div class="connected-sortable droppable-area1 colTam"> </div>');
+   // var dives = $('<div></div>');
+    
+    //dives.append(card);
+    newRow.append(card);
+    
+    console.log(card.html());
+    console.log(newRow.html());
     $("#cardsGame").append(newRow);
     $(".newRow").html("");
     init();
@@ -229,4 +237,18 @@ function callCard(cardName){
     else if(card =="card-Black13"){imgCard+='src="https://i.ibb.co/ZByFYNg/card-Black13.jpg">';}
 
     return imgCard+='</div>'; 
+}
+
+
+function append(){
+
+  var element = document.getElementById("cardsOnHand");
+  var jsonObject = {};
+  jsonObject.id = element.id;
+  jsonObject.innerHTML = element.innerHTML;
+
+  var jsonString = JSON.stringify(jsonObject); // this is json for your div. 
+console.log(jsonString);
+
+  
 }

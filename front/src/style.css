@@ -171,7 +171,7 @@ footer .cardsTam {
 }
 
 .droppable-image {
-	background-image: url(src="https://i.ibb.co/X8Lb8zN/addCard.png");
+	background-image: url("https://i.ibb.co/X8Lb8zN/addCard.png") ;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
