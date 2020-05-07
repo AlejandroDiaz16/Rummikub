@@ -22,6 +22,10 @@ footer {
 	min-height: auto !important;
 }
 
+.changes {
+	visibility: collapse;
+}
+
 .labels {
 	font-size: 2rem;
 }

@@ -64,12 +64,16 @@ function printPlayersInfo(){
 	console.log(players.length);
 	$.each(players,function(index, obj){
 		var clase="#player"+(index+1);
-		var changeStatus="#statusPlayer"+(index+1);
+		var statusPlayer="#statusPlayer"+(index+1);
+		var changeState="#changeState"+(index+1);
 		console.log(clase);
 		$(clase).text(obj.playerName);
-		if(obj.state == false){$(changeStatus).text("I'm not ready");}
-		else if(obj.state == true){$(changeStatus).text("I'm ready");}
-		
+		if(obj.state == false){$(statusPlayer).text("I'm not ready");}
+		else if(obj.state == true){$(statusPlayer).text("I'm ready");}
+		$(changeState).addClass("changes");
+		if(localStorage.getItem("playerName") == obj.playerName){
+			$(changeState).removeClass("changes");
+		}
 	});
 }
 

@@ -4,6 +4,8 @@ var keepCon;
 var answerPetition;
 var statusPetition;
 var namePlayer;
+var roomToJoin;
+
 /*connections*/
 webSocket.onopen = function(evt) {
 	keepCon = setInterval(keepAlive, 10000);
@@ -30,7 +32,12 @@ webSocket.onmessage = function(JSONResponse){
 		//console.log(localStorage.getItem("playerName"));
 	}
 	else if(response.type == "joinToRoom"){
-		if(response.data.message == "200 OK"){statusPetition=response.data.message;}
+		if(response.data.message == "200 OK"){
+			roomToJoin = $("#roomCode").val();
+			localStorage.setItem("playerName",namePlayer);
+			localStorage.setItem("playerRoom",roomToJoin);
+			window.location.href="room.html";
+		}	
 		else if(response.data.message == "Player is already in room"){alert("Player is already in room");}
 		else if(response.data.message == "Room is full"){alert("The Room is full");}
 		else if(response.data.message == "Romm doesn't exist"){alert("The Room doesn't exist");}
