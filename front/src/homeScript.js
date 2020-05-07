@@ -5,6 +5,7 @@ var keepCon;
 var answerPetition;
 var statusPetition;
 var players;
+var playersReady;
 
 /*connections*/
 webSocket.onopen = function(evt) {
@@ -27,7 +28,17 @@ webSocket.onmessage = function(JSONResponse){
 		players=response.data.playersInfo;
 		printPlayersInfo();
 	}
-	if(response.type == "updateState"){}
+	else if(response.type == "updateState"){console.log(response.data.message);}
+	else if(response.type == "startGame"){
+		if(response.data.message == "200 OK"){
+			playersReady=response.data.isPlayersReady;
+			if(playersReady == true){window.location.href="inGame.html";}
+			else{alert("Are missing players to be ready")}
+		}
+		else if(response.data.message == "Room doesn't exist"){alert("The room doesn't exist");}
+		else if(response.data.message == "Don't enough players"){alert("There aren't enough players");}
+	}
+
 }
 
 
@@ -71,7 +82,7 @@ function printPlayersInfo(){
 		if(obj.state == false){$(statusPlayer).text("I'm not ready");}
 		else if(obj.state == true){$(statusPlayer).text("I'm ready");}
 		$(changeState).addClass("changes");
-		if(localStorage.getItem("playerName") == obj.playerName){
+		if(localStorage.getItem("playerName").toLowerCase() == obj.playerName.toLowerCase()){
 			$(changeState).removeClass("changes");
 		}
 	});
@@ -91,6 +102,12 @@ function changeStatus(){
 
 /*start the game*/
 function startGame(){
-	console.log();
+	request = {
+		type: 'startGame',
+		data: {
+			room:localStorage.getItem("playerRoom")
+		}
+	}
+	webSocket.send(JSON.stringify(request));
 }
 
