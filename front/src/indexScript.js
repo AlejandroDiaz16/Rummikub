@@ -26,6 +26,7 @@ webSocket.onmessage = function(JSONResponse){
 		answerPetition=response.data.room;
 		localStorage.setItem("playerName",namePlayer);
 		localStorage.setItem("playerRoom",answerPetition);
+		window.location.href="room.html";
 		//console.log(localStorage.getItem("playerName"));
 	}
 	else if(response.type == "joinToRoom"){
@@ -47,7 +48,6 @@ function createGame(){
 		}
 	}
 	webSocket.send(JSON.stringify(request));
-	window.location.href="room.html";
 }
 
 
