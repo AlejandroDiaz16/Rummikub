@@ -3,44 +3,49 @@
 <head>
 	<title></title>
 
-	<link rel="stylesheet" type="text/css" href="./style.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="./inGameScript.js"></script>
+    <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+
 <body onload="init()">
-	<div class="container gameBackground">
-		<div id="tableGame" class="row tableCards droppable connected-sortable">
+<div class="container gameBackground">
+    <div id="tableGame" class="row tableCards droppable">
 
-			<div id="cardsGame" class="droppable-area2 connected-sortable">
-				
-			</div>
-			
-			<div class="hola21 newRow  droppable-area1"></div>
+        <div id="cardsGame">
 
-		</div>
+        </div>
 
-		<div class=" claseNueva">
-			<div><img class="iconTam" onclick="orderByColor();" src="https://i.ibb.co/gT6dTyQ/orden.jpg" alt="orden"></div>
-			<div><img class="iconTam" onclick="normalOrder();" src="https://i.ibb.co/BV2YwTS/orden-Color.jpg"></div>
-			<div><img class="iconTam" onclick="extraCard();" src="https://i.ibb.co/YcDFxH5/more-Cards.png" alt="more-Cards"></div>
-			<div><img class="iconTam" onclick="checkMove();" src="https://i.ibb.co/nCQmBz3/check.png" alt="check"></div>
-		</div>
+        <div class="hola21 newRow  droppable-area1"></div>
 
-		<footer>
-			<div id="cardsOnHand" class=" connected-sortable droppable-area2 colTam marginFoot">
-				
-			</div>
-		</footer>
+    </div>
 
-		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-	</body>
-	</html>
+    <div class=" claseNueva">
+        <div><img class="iconTam" onclick="orderByColor();" src="https://i.ibb.co/gT6dTyQ/orden.jpg" alt="orden"></div>
+        <div><img class="iconTam" onclick="normalOrder();" src="https://i.ibb.co/BV2YwTS/orden-Color.jpg"></div>
+        <div><img class="iconTam" onclick="extraCard();" src="https://i.ibb.co/YcDFxH5/more-Cards.png" alt="more-Cards">
+        </div>
+        <div><img class="iconTam" onclick="checkMove();" src="https://i.ibb.co/nCQmBz3/check.png" alt="check"></div>
+    </div>
+
+    <footer>
+        <div id="cardsOnHand" class=" connected-sortable droppable-area1 colTam marginFoot">
+        	<div class="draggable-item" style=""><img class="cardsTam" src="https://i.ibb.co/HTKwp9h/card-Blue02.jpg"></div>
+        	<div class="draggable-item" style=""><img class="cardsTam" src="https://i.ibb.co/yQhwdSn/card-Blue03.jpg"></div>
+        	<div class="draggable-item "><img class="cardsTam" src="https://i.ibb.co/mBBckZT/card-Blue04.jpg"></div>
+        </div>
+    </footer>
+
+</body>
+
+<script type="text/javascript" src="./inGameScript.js"></script>
 
 
+</html>
 
 
-	<div >
-		<div class="draggable-item ui-sortable-helper" style="width: 60px; height: 60px; position: absolute; z-index: 1000; left: 118px; top: -92px;"><img class="cardsTam" src="https://i.ibb.co/FxkQN2w/card-Red08.jpg">
-		</div>
-	</div>
+<div class="draggable-item ui-sortable-helper"
+     style="width: 60px; height: 60px; position: absolute; z-index: 1000; left: 115px; top: -149px;"><img
+        class="cardsTam" src="https://i.ibb.co/Pwy0NtK/card-Blue09.jpg"></div>
+<div class="draggable-item ui-sortable-placeholder" style="visibility: hidden; height: 60px; width: 60px;"></div>
