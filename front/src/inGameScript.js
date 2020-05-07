@@ -1,12 +1,14 @@
 init();
 
-var apiURL = "ws://25.133.184.153:12500";
+var apiURL = "ws://25.133.184.148:12500";
 var webSocket = new WebSocket(apiURL);
 var keepCon;
 var answerPetition;
 var statusPetition;
 var players;
 var playersReady;
+var cardsOnHand =[];
+
 
 var card = new Object();
 card.color = "";
@@ -19,6 +21,7 @@ var cards;
 webSocket.onopen = function (evt) {
     keepCon = setInterval(keepAlive, 10000);
     updateSocketPlayer();
+    initialCards();
     //   getPlayersInfo();
 }
 
@@ -35,6 +38,7 @@ webSocket.onmessage = function (JSONResponse) {
     if (response.type == "getCardsByPlayer") {
         console.log(response.data);
         cards = response.data.cards;
+        printInitialCards();
     }
 
 }
@@ -109,35 +113,6 @@ function initialCards() {
     webSocket.send(JSON.stringify(request));
 }
 
-function printInitialCards() {
-    console.log(cards.length);
-    $.each(cards, function (index, obj) {
-        var card;
-        //if(obj.color = "Black-Face"){card="Black-Face";}
-        //if(obj.color = "Red-Face"){card="Red-Face";}
-        if (obj.valor == 0) {
-            if (obj.color == "Black-Face") {
-                console.log("negro");
-                card = obj.color;
-            }
-            if (obj.color == "Red-Face") {
-                console.log("rojo");
-                card = obj.color;
-            }
-        }
-        if (obj.valor < 10 && obj.valor > 0) {
-            card = obj.color + "0" + obj.valor;
-        }
-        if (obj.valor >= 10) {
-            card = obj.color + obj.valor;
-        }
-
-        //if(obj.color =="Black-Face"){card=obj.color;}
-
-        addToHand(card);
-    });
-}
-
 function printPlayersInfo() {
     console.log(players.length);
     $.each(players, function (index, obj) {
@@ -195,10 +170,30 @@ function addSection(card) {
 }
 
 
-/*links cards*/
-function callCard(cardName) {
-    var card = "card-" + cardName;
-    var imgCard = '<div class="draggable-item "><img class="cardsTam" ';
+/*links cards   Black01 */
+function printInitialCards() {
+    
+    $.each(cards, function (index, obj) {
+        var card1;
+        if (obj.valor == 0) {
+            if (obj.color == "Black-Face") {
+               // console.log("negro");
+                card1 = obj.color;
+            }
+            if (obj.color == "Red-Face") {
+                //console.log("rojo");
+                card1 = obj.color;
+            }
+        }
+        if (obj.valor < 10 && obj.valor > 0) {
+            card1 = obj.color + "0" + obj.valor;
+        }
+        if (obj.valor >= 10) {
+            card1 = obj.color + obj.valor;
+        }
+
+            var card = "card-" + card1;
+            var imgCard = '<div class="draggable-item "><img class="cardsTam" ';
 
     if (card == "card-Blue09") {
         imgCard += 'src="https://i.ibb.co/Pwy0NtK/card-Blue09.jpg"  >';
@@ -309,8 +304,12 @@ function callCard(cardName) {
     } else if (card == "card-Black13") {
         imgCard += 'src="https://i.ibb.co/ZByFYNg/card-Black13.jpg">';
     }
-
-    return imgCard += '</div>';
+    imgCard += '</div>';
+    cardsOnHand[imgCard]=obj;
+    $("#cardsOnHand").append(imgCard);
+    });
+    console.log(cardsOnHand);
+   // console.log("asd");
 }
 
 
@@ -326,11 +325,13 @@ function append(){
   
 }
 
+
 function sendCardsToSocket(){
     var jugadas=$("#cardsOnHand").children();
-    console.log(jugadas);
-}
-
-tabler{
-    jugadas:[[{},{},{}],[{},{},{}]]
+    var dataTosend=[];
+    $.each(jugadas,function(index,obj){
+        console.log(obj);
+        
+    });
+    console.log(dict);
 }
