@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<title>Juego</title>
+</head>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<body>
+<div class="container gameBackground centerElements">
+	
+	<div class="startTheGame">
+		<h2>Rummikub Online</h2>
+		<label class="labels" for="playerNamee">name</label>
+		<input id="playerNamee" type="text" name="playerNamee" class="inputRoom"><br>
+		<label class="labels" for="roomCode">room</label>
+		<input id="roomCode" type="text" name="roomCode" class="inputRoom">
+		<a onclick="joinGame();" class=" btn btn-primary">Join Game</a>
+		<h2 class="orText">Or</h2>
+		<a onclick="createGame();" class="joinBottom btn btn-primary">Create a New Game</a>
+		<h2 class="titleJoin">Designed by Mani-Pro</h2>
+	</div>
+	
+</div>
+</body>
+<script type="text/javascript" src="./indexScript.js"></script>
+</html>

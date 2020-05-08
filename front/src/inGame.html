@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <link rel="stylesheet" type="text/css" href="./style.css">
+</head>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+
+<body onload="init()">
+<div class="container gameBackground">
+    <div id="headerPlayers">
+        <div class="name" id="player1">Bloque 1</div>
+        <div class="name" id="player2">Bloque 2</div>
+        <div class="name" id="player3">Bloque 3</div>
+        <div class="name" id="player4">Bloque 4</div>
+    </div>
+
+
+    <div id="tableGame" class="row tableCards droppable">
+
+        <div id="cardsGame">
+            
+        </div>
+
+        <div class="hola21 newRow  droppable-area1"></div>
+
+    </div>
+
+    <div class=" claseNueva">
+        <div><img class="iconTam" onclick="orderCardsByColor();" src="https://i.ibb.co/gT6dTyQ/orden.jpg" alt="orden"></div>
+        <div><img class="iconTam" onclick="orderCardsByNumber();" src="https://i.ibb.co/BV2YwTS/orden-Color.jpg"></div>
+        <div><img class="iconTam" onclick="addCardToPlayer();" src="https://i.ibb.co/YcDFxH5/more-Cards.png" alt="more-Cards">
+        </div>
+        <div><img class="iconTam" onclick="checkMove();" src="https://i.ibb.co/nCQmBz3/check.png" alt="check"></div>
+    </div>
+
+    <footer>
+        <div id="cardsOnHand" class=" connected-sortable droppable-area1 colTam marginFoot">
+        </div>
+    </footer>
+
+</body>
+
+<script type="text/javascript" src="./inGameScript.js"></script>
+
+
+</html>
+
+
+<div class="draggable-item ui-sortable-helper"
+     style="width: 60px; height: 60px; position: absolute; z-index: 1000; left: 115px; top: -149px;"><img
+        class="cardsTam" src="https://i.ibb.co/Pwy0NtK/card-Blue09.jpg"></div>
+<div class="draggable-item ui-sortable-placeholder" style="visibility: hidden; height: 60px; width: 60px;"></div>
