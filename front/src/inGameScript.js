@@ -97,11 +97,11 @@ webSocket.onmessage = function (JSONResponse) {
         isMyTurn = response.data.isMyTurn;
         ableDisable(isMyTurn);
         if (isMyTurn) {
-            startTimer();
+            //startTimer();
             console.log("es my turno" + isMyTurn);
         }else {
 
-            stopTimmer();
+            //stopTimmer();
         }
     } else if (response.type == "endGame") {
         win = response.data.winners;
@@ -140,7 +140,7 @@ function isTurn() {
     });
 }
 
-function startTimer() {
+/*function startTimer() {
     $("#timer").text("30");
     timer = setTimeout(restarTimer, 1000);
 }
@@ -166,7 +166,7 @@ function stopTimmer() {
     clearInterval(timer);
     clearTimeout(timer);
     $("#timer").text("Waiting");
-}
+}*/
 
 function endTurn() {
     request = {
