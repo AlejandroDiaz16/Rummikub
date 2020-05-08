@@ -139,9 +139,15 @@ footer {
 	width: 45px;
 }
 
+.local {
+	margin-top: 5%;
+    text-align-last: center;
+}
+
 footer .cardsTam {
 	width: 60px;
 	height: 120px;
+	border: 2px solid;
 }
 
 

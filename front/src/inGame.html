@@ -11,10 +11,15 @@
 
 <body onload="init()">
 <div class="container gameBackground">
+    <div>
+        <h4 id=""></h4>
+        <h4 id=""></h4>
+        <h4 id=""></h4>
+    </div>
     <div id="tableGame" class="row tableCards droppable">
 
         <div id="cardsGame">
-
+        	
         </div>
 
         <div class="hola21 newRow  droppable-area1"></div>
@@ -22,9 +27,9 @@
     </div>
 
     <div class=" claseNueva">
-        <div><img class="iconTam" onclick="orderByColor();" src="https://i.ibb.co/gT6dTyQ/orden.jpg" alt="orden"></div>
-        <div><img class="iconTam" onclick="normalOrder();" src="https://i.ibb.co/BV2YwTS/orden-Color.jpg"></div>
-        <div><img class="iconTam" onclick="extraCard();" src="https://i.ibb.co/YcDFxH5/more-Cards.png" alt="more-Cards">
+        <div><img class="iconTam" onclick="orderCardsByColor();" src="https://i.ibb.co/gT6dTyQ/orden.jpg" alt="orden"></div>
+        <div><img class="iconTam" onclick="orderCardsByNumber();" src="https://i.ibb.co/BV2YwTS/orden-Color.jpg"></div>
+        <div><img class="iconTam" onclick="addCardToPlayer();" src="https://i.ibb.co/YcDFxH5/more-Cards.png" alt="more-Cards">
         </div>
         <div><img class="iconTam" onclick="checkMove();" src="https://i.ibb.co/nCQmBz3/check.png" alt="check"></div>
     </div>

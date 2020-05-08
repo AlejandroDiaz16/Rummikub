@@ -1,5 +1,5 @@
 
-var apiURL = "ws://25.133.184.148:12500";
+var apiURL = "ws://25.133.184.153:12500";
 var webSocket = new WebSocket(apiURL);
 var keepCon;
 var answerPetition;
@@ -59,6 +59,7 @@ function updateSocketPlayer(){
 	webSocket.send(JSON.stringify(request));
 }
 
+
 function getPlayersInfo(){
 	var roomPlayer= localStorage.getItem("playerRoom");
 	request = {
@@ -68,6 +69,8 @@ function getPlayersInfo(){
 		}
 	}
 	webSocket.send(JSON.stringify(request));
+	    var roomeCode="hola Code: "+localStorage.getItem("playerRoom");
+	    document.getElementById("local").innerHTML = "Room Code: " + localStorage.getItem("playerRoom");
 }
 
 /* player name and status*/
@@ -111,3 +114,7 @@ function startGame(){
 	webSocket.send(JSON.stringify(request));
 }
 
+
+function getRoom(){
+
+}
