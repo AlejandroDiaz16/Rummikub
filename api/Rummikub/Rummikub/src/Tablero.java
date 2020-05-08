@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package rummikub;
+
 
 import java.util.ArrayList;
 
@@ -18,12 +18,12 @@ public class Tablero {
     public Tablero(ArrayList<Jugada> jugadas) {
         this.jugadas = jugadas;
     }
-    
-    public Tablero() {
-		super();
-	}
 
-	public boolean validarTablero() {
+    public Tablero() {
+        super();
+    }
+
+    private boolean validarTablero(ArrayList<Jugada> jugadas) {
         for (Jugada jugada : jugadas) {
             if (!jugada.validarJugada()) {
                 return false;
@@ -31,21 +31,25 @@ public class Tablero {
         }
         return true;
     }
+    
+    public boolean validarTablero() {
+        return validarTablero(this.jugadas);
+    }
 
-    private boolean validarNuevoTablero(Tablero nuevoTablero, Jugador jugador) {
+    private boolean validarNuevoTablero(ArrayList<Jugada> jugadas, Jugador jugador) {
 
         if (!jugador.isPrimeraJugada()) {
             int puntaje = 0;
             int i = 0;
             for (i = 0; i < this.jugadas.size(); i++) {;
-                int index = nuevoTablero.jugadas.indexOf(this.jugadas.get(i));
+                int index = jugadas.indexOf(this.jugadas.get(i));
                 if (index == -1) {
                     return false;
                 }
-                nuevoTablero.jugadas.remove(index);
+                jugadas.remove(index);
             }
 
-            for (Jugada jugada : nuevoTablero.jugadas) {
+            for (Jugada jugada : jugadas) {
                 if (!jugada.validarJugada()) {
                     return false;
                 }
@@ -55,15 +59,15 @@ public class Tablero {
                 return false;
             }
             jugador.setPrimeraJugada(true);
-            nuevoTablero.jugadas.addAll(this.jugadas);
+            jugadas.addAll(this.jugadas);
         }
-        return nuevoTablero.validarTablero();
+        return validarTablero(jugadas);
 
     }
 
-    public void actualizarTablero(Tablero nuevoTablero, Jugador jugador) {
-        if (validarNuevoTablero(nuevoTablero, jugador)) {
-            this.jugadas = nuevoTablero.jugadas;
+    public void actualizarTablero(ArrayList<Jugada> jugadas, Jugador jugador) {
+        if (validarNuevoTablero(jugadas, jugador)) {
+            this.jugadas = jugadas;
         }
     }
 

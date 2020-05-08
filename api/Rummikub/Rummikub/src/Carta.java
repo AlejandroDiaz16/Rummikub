@@ -3,22 +3,29 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package rummikub;
+
 
 import java.util.HashMap;
 import java.util.Objects;
+import org.json.JSONObject;
 
 /**
  *
  * @author jair-
  */
 public class Carta {
+
     private int valor;
     private String color;
+
+    public Carta(int valor, String color) {
+        this.valor = valor;
+        this.color = color;
+    }
     
-    public Carta(int valor, String color){
-        this.valor=valor;
-        this.color=color;
+    public Carta (JSONObject json){
+        this.valor = json.getInt("valor");
+        this.color = json.getString("color");
     }
 
     public int getValor() {
@@ -62,6 +69,5 @@ public class Carta {
         }
         return true;
     }
-    
-    
+
 }

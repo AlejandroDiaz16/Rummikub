@@ -3,11 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package rummikub;
+
 
 import java.util.ArrayList;
 import java.util.Collections;
 import org.java_websocket.WebSocket;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
@@ -60,6 +62,15 @@ public class Jugador {
     
     public void addCarta(Carta carta) {
     	baraja.add(carta);
+    }
+    
+    public void setBaraja(JSONArray jsonArray) {
+        ArrayList<Carta> baraja = new ArrayList<>();
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject jsonCarta = new JSONObject(jsonArray.get(i).toString());
+            baraja.add(new Carta(jsonCarta));
+        }
+        this.baraja = baraja;
     }
     
     public void setPrimeraJugada(boolean primeraJugada) {
