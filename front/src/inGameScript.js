@@ -142,7 +142,7 @@ function isTurn() {
 
 function startTimer() {
     $("#timer").text("30");
-    timer = setInterval(restarTimer, 1000);
+    timer = setTimeout(restarTimer, 1000);
 }
 
 function restarTimer() {
@@ -155,6 +155,7 @@ function restarTimer() {
         stopTimmer();
     } else {
         $("#timer").text(numero);
+        timer = setTimeout(restarTimer, 1000);
     }
 }
 
