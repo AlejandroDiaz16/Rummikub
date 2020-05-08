@@ -95,12 +95,12 @@ webSocket.onmessage = function (JSONResponse) {
     } else if (response.type == "getIsTurnPlayer") {
         console.log(response.data);
         isMyTurn = response.data.isMyTurn;
+        ableDisable(isMyTurn);
         if (isMyTurn) {
             startTimer();
-            ableDisable(isMyTurn);
             console.log("es my turno" + isMyTurn);
         }else {
-            
+
             stopTimmer();
         }
     } else if (response.type == "endGame") {
