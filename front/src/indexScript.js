@@ -38,15 +38,43 @@ webSocket.onmessage = function(JSONResponse){
 			localStorage.setItem("playerRoom",roomToJoin);
 			window.location.href="room.html";
 		}	
-		else if(response.data.message == "Player is already in room"){alert("Player is already in room");}
-		else if(response.data.message == "Room is full"){alert("The Room is full");}
-		else if(response.data.message == "Romm doesn't exist"){alert("The Room doesn't exist");}
+		else if(response.data.message == "Player is already in room"){
+
+			swal({
+  			title: "Error!",
+  			text: "Player is already in room!",
+  			icon: "warning",
+  			button: "OK",
+		});
+			//alert("Player is already in room");
+		}
+		else if(response.data.message == "Room is full"){
+			
+			swal({
+  			title: "Error!",
+  			text: "The room is full!",
+  			icon: "warning",
+  			button: "OK",
+		});
+			//alert("The Room is full");
+		}
+		else if(response.data.message == "Romm doesn't exist"){
+			
+			swal({
+  			title: "Error!",
+  			text: "The Room doesn't exist!",
+  			icon: "warning",
+  			button: "OK",
+		});
+			//alert("The Room doesn't exist");
+		}
 		else{alert("unknown error :o");console.log(response.data.message);}	
 	}
 }
 
 /*methods*/
 function createGame(){
+	if ($("#playerNamee").val()!="") {
 	namePlayer=$("#playerNamee").val();
 	request = {
 		type: 'createRoom',
@@ -55,12 +83,23 @@ function createGame(){
 		}
 	}
 	webSocket.send(JSON.stringify(request));
+	}else{
+		swal({
+  			title: "Wrong name!",
+  			text: "Ups Empty name!",
+  			icon: "warning",
+  			button: "OK",
+		});
+
+	}
+
 }
 
 
 function joinGame(){
+	if ($("#playerNamee").val()!="") {
 	namePlayer=$("#playerNamee").val();
-	codeRoom = $("#roomCode").val();	
+	codeRoom = $("#roomCode").val();
 	request = {
 		type: 'joinToRoom',
 		data: {
@@ -69,5 +108,15 @@ function joinGame(){
 		}
 	}
 	webSocket.send(JSON.stringify(request));
+	}else{
+		swal({
+  			title: "Wrong name!",
+  			text: "Ups Empty name or invalid room!",
+  			icon: "warning",
+  			button: "OK",
+		});
+
+	}
+
 }
 
