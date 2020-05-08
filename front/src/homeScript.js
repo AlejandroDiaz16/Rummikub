@@ -30,13 +30,33 @@ webSocket.onmessage = function(JSONResponse){
 	}
 	else if(response.type == "updateState"){console.log(response.data.message);}
 	else if(response.type == "startGame"){
+		console.log()
 		if(response.data.message == "200 OK"){
 			playersReady=response.data.isPlayersReady;
 			if(playersReady == true){window.location.href="inGame.html";}
 			else{alert("Are missing players to be ready")}
 		}
-		else if(response.data.message == "Room doesn't exist"){alert("The room doesn't exist");}
-		else if(response.data.message == "Don't enough players"){alert("There aren't enough players");}
+		else if(response.data.message == "Room doesn't exist"){
+			swal({
+  			title: "Error!",
+  			text: "The room doesn't exist!",
+  			icon: "warning",
+  			button: "OK",
+		});
+			//alert("The room doesn't exist");
+		}
+		else if(response.data.message == "Don't enough players"){
+			alert("There aren't enough players");
+		}
+		else{
+			swal({
+  			title: "All the players have to be ready!",
+  			text: "The game can not be started!",
+  			icon: "warning",
+  			button: "OK",
+		});
+			
+		}
 	}
 
 }
@@ -70,7 +90,8 @@ function getPlayersInfo(){
 	}
 	webSocket.send(JSON.stringify(request));
 	    var roomeCode="hola Code: "+localStorage.getItem("playerRoom");
-	    document.getElementById("local").innerHTML = "Room Code: " + localStorage.getItem("playerRoom");
+	    $("#local").text("Room Code: " + localStorage.getItem("playerRoom"));
+
 }
 
 /* player name and status*/
