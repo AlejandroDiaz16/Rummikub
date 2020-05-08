@@ -72,11 +72,23 @@ webSocket.onmessage = function (JSONResponse) {
 
         }
         if(response.data.message == "Score isn't enough"){
-            alert("Score isn't enough");
+            swal({
+                    title: "Error!",
+                    text: "Score isn't enough!",
+                    icon: "warning",
+                    button: "OK",
+                });
+
             initialCards();
         }
         else if(response.data.message == "invalid Board"){
-            alert("Invalid Board");
+            swal({
+                    title: "Error!",
+                    text: "Invalid Board!",
+                    icon: "warning",
+                    button: "OK",
+                });
+            
         }
     }
     else if(response.type == "getBoard"){
@@ -334,8 +346,6 @@ function updateCardsByPlayer(){
         var imgTag = $(dataa.html());
         dataTosend.push(cardsRepositoryMap[imgTag.prop("src")]);
     });
-    console.log(isMyTurn+" 4444444");
-    ableDisable(isMyTurn);
     request = {
         type: 'updateCardsByPlayer',
         data: {

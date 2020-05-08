@@ -33,10 +33,31 @@ webSocket.onmessage = function(JSONResponse){
 		if(response.data.message == "200 OK"){
 			playersReady=response.data.isPlayersReady;
 			if(playersReady == true){window.location.href="inGame.html";}
-			else{alert("Are missing players to be ready")}
+			else{
+				swal({
+                    title: "Error!",
+                    text: "Are missing players to be ready!",
+                    icon: "warning",
+                    button: "OK",
+                });
+				}
 		}
-		else if(response.data.message == "Room doesn't exist"){alert("The room doesn't exist");}
-		else if(response.data.message == "Don't enough players"){alert("There aren't enough players");}
+		else if(response.data.message == "Room doesn't exist"){
+			swal({
+                    title: "Error!",
+                    text: "The room doesn't exist!",
+                    icon: "warning",
+                    button: "OK",
+                });
+			
+		else if(response.data.message == "Don't enough players"){
+			swal({
+                    title: "Error!",
+                    text: "There aren't enough players!",
+                    icon: "warning",
+                    button: "OK",
+                });
+
 	}
 
 }
