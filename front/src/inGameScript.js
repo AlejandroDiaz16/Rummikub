@@ -407,7 +407,7 @@ function getURLByCard(card) {
 function createHashMapCards(cards) {
 
     $.each(cards, function (index, obj) {
-        cardsRepositoryMap[getURLByCard(obj)];
+        cardsRepositoryMap[getURLByCard(obj)]  = obj;
     });
     //console.log(cardsOnHand);
    // console.log("asd");

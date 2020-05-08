@@ -4,8 +4,9 @@
  * and open the template in the editor.
  */
 
-
 import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
@@ -31,44 +32,52 @@ public class Tablero {
         }
         return true;
     }
-    
+
     public boolean validarTablero() {
         return validarTablero(this.jugadas);
     }
 
-    private boolean validarNuevoTablero(ArrayList<Jugada> jugadas, Jugador jugador) {
-
+    private String validarNuevoTablero(ArrayList<Jugada> jugadas, Jugador jugador) {
+        ArrayList<Jugada> jugadasBackup = (ArrayList<Jugada>) jugadas.clone();
         if (!jugador.isPrimeraJugada()) {
             int puntaje = 0;
             int i = 0;
             for (i = 0; i < this.jugadas.size(); i++) {;
                 int index = jugadas.indexOf(this.jugadas.get(i));
                 if (index == -1) {
-                    return false;
+                    return "invalid Board";
                 }
                 jugadas.remove(index);
             }
 
             for (Jugada jugada : jugadas) {
                 if (!jugada.validarJugada()) {
-                    return false;
+                    return "invalid Board";
                 }
                 puntaje += jugada.getPuntaje();
             }
             if (puntaje < 30) {
-                return false;
+                return "Score isn't enough";
             }
             jugador.setPrimeraJugada(true);
             jugadas.addAll(this.jugadas);
         }
-        return validarTablero(jugadas);
+        if (validarTablero(jugadas)) {
+            this.jugadas = jugadasBackup;
+            return "20O OK";
+        }
+        return "invalid Board";
 
     }
 
-    public void actualizarTablero(ArrayList<Jugada> jugadas, Jugador jugador) {
-        if (validarNuevoTablero(jugadas, jugador)) {
-            this.jugadas = jugadas;
+    public String actualizarTablero(JSONArray jsonJugadas, Jugador jugador) {
+        ArrayList<Jugada> jugadas = new ArrayList<>();
+        for (int i = 0; i < jsonJugadas.length(); i++) {
+            JSONObject jsonJugada = new JSONObject(jsonJugadas.get(i).toString());
+            JSONArray jsonCartas = jsonJugada.getJSONArray("cards");
+            jugadas.add(new Jugada(jsonCartas));
         }
+        return validarNuevoTablero(jugadas, jugador);
     }
 
     public ArrayList<Jugada> getJugadas() {

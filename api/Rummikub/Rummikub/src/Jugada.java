@@ -8,6 +8,8 @@
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Objects;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
@@ -19,6 +21,19 @@ public class Jugada {
     private int puntaje = 0;
 
     public Jugada(ArrayList<Carta> cartas) {
+        this.cartas = cartas;
+    }
+
+    public ArrayList<Carta> getCartas() {
+        return cartas;
+    }
+    
+    public Jugada (JSONArray jsonCartas) {
+        ArrayList<Carta> cartas = new ArrayList<>();
+        for (int i = 0; i < jsonCartas.length(); i++) {
+            JSONObject jsonCarta = new JSONObject(jsonCartas.get(i).toString());
+            cartas.add(new Carta(jsonCarta));
+        }
         this.cartas = cartas;
     }
 
