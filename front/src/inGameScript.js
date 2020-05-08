@@ -36,6 +36,7 @@ function keepAlive() {
 webSocket.onmessage = function (JSONResponse) {
     var response = JSON.parse(JSONResponse.data);
     if (response.type == "getCardsByPlayer") {
+        $("#cardsOnHand").empty();
         console.log(response.data);
         cards = response.data.cards;
         printInitialCards();
@@ -166,6 +167,7 @@ function addSection(card) {
 /*ordenamientos*/
 
 function orderCardsByColor(){
+    updateCardsByPlayer();
     var jugadas=$("#cardsOnHand").children();
     var dataTosend=[];
     $.each(jugadas,function(index,obj){
@@ -187,6 +189,7 @@ function orderCardsByColor(){
 }
 
 function orderCardsByNumber(){
+    updateCardsByPlayer();
     var jugadas=$("#cardsOnHand").children();
     var dataTosend=[];
     $.each(jugadas,function(index,obj){
@@ -222,11 +225,12 @@ function updateCardsByPlayer(){
         }
     }
     webSocket.send(JSON.stringify(request));
+    console.log(dataTosend);
 }
 
 
 function addCardToPlayer(){
-    $("#cardsOnHand").empty();
+    
     request = {
         type: 'addCardToPlayer',
         data: {
