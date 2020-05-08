@@ -22,7 +22,7 @@ webSocket.onopen = function (evt) {
     keepCon = setInterval(keepAlive, 10000);
     updateSocketPlayer();
     initialCards();
-    //   getPlayersInfo();
+    getPlayersInfo();
 }
 
 function keepAlive() {
@@ -42,6 +42,11 @@ webSocket.onmessage = function (JSONResponse) {
     }
     else if(response.type == "setSocketPlayer"){
         console.log(response.data.message);
+    }
+    else if(response.type == "getPlayersByRoom"){
+        players=response.data.playersInfo;
+        console.log(response.data);
+        printPlayersInfo();
     }
 
 }
@@ -101,26 +106,17 @@ function getPlayersInfo(){
         }
     }
     webSocket.send(JSON.stringify(request));
-        var roomeCode="hola Code: "+localStorage.getItem("playerRoom");
-        document.getElementById("local").innerHTML = "Room Code: " + localStorage.getItem("playerRoom");
 }
 
-function printPlayersInfo(){
-    console.log(players.length);
-    $.each(players,function(index, obj){
-        var clase="#player"+(index+1);
-        var statusPlayer="#statusPlayer"+(index+1);
-        var changeState="#changeState"+(index+1);
+function printPlayersInfo() {
+    console.log("qwe");
+    $.each(players, function (index, obj) {
+        var clase = "#player" + (index + 1);
         console.log(clase);
         $(clase).text(obj.playerName);
-        if(obj.state == false){$(statusPlayer).text("I'm not ready");}
-        else if(obj.state == true){$(statusPlayer).text("I'm ready");}
-        $(changeState).addClass("changes");
-        if(localStorage.getItem("playerName").toLowerCase() == obj.playerName.toLowerCase()){
-            $(changeState).removeClass("changes");
-        }
     });
 }
+
 /**/
 
 function removeEmptyColTam() {
@@ -149,25 +145,6 @@ function initialCards() {
     webSocket.send(JSON.stringify(request));
 }
 
-function printPlayersInfo() {
-    console.log(players.length);
-    $.each(players, function (index, obj) {
-        var clase = "#player" + (index + 1);
-        var statusPlayer = "#statusPlayer" + (index + 1);
-        var changeState = "#changeState" + (index + 1);
-        console.log(clase);
-        $(clase).text(obj.playerName);
-        if (obj.state == false) {
-            $(statusPlayer).text("I'm not ready");
-        } else if (obj.state == true) {
-            $(statusPlayer).text("I'm ready");
-        }
-        $(changeState).addClass("changes");
-        if (localStorage.getItem("playerName").toLowerCase() == obj.playerName.toLowerCase()) {
-            $(changeState).removeClass("changes");
-        }
-    });
-}
 
 /*Game functions*/
 
