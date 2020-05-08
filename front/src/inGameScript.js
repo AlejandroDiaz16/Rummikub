@@ -69,6 +69,7 @@ webSocket.onmessage = function (JSONResponse) {
         if(response.data.message == "200 OK"){
             updateCardsByPlayer();
             isTurn();
+
         }
         if(response.data.message == "Score isn't enough"){
             alert("Score isn't enough");
@@ -80,15 +81,17 @@ webSocket.onmessage = function (JSONResponse) {
     }
     else if(response.type == "getBoard"){
         //console.log(response.data);
-        console.log(response.data);
-        cards = response.data.board.cards;
+        cards = response.data.board.jugadas;
         $("#cardsGame").empty();
         printCardsOnBoard(cards);
     }
     else if(response.type == "getIsTurnPlayer"){
         console.log(response.data);
         isMyTurn=response.data.isMyTurn;
-        if(isMyTurn){startTimer();}
+        if(isMyTurn){
+            startTimer();
+            ableDisable(isMyTurn);
+            console.log("es my turno"+isMyTurn);}
     }
     else if(response.type =="endGame"){
         win=response.data.winners;
@@ -134,7 +137,6 @@ function restarTimer(){
     numero--;
     if(numero==0){
         addCardToPlayer();
-        
     }else{
         $("#timer").text(numero);
     }
@@ -332,6 +334,8 @@ function updateCardsByPlayer(){
         var imgTag = $(dataa.html());
         dataTosend.push(cardsRepositoryMap[imgTag.prop("src")]);
     });
+    console.log(isMyTurn+" 4444444");
+    ableDisable(isMyTurn);
     request = {
         type: 'updateCardsByPlayer',
         data: {
@@ -342,10 +346,20 @@ function updateCardsByPlayer(){
     webSocket.send(JSON.stringify(request));
 }
 
+function ableDisable(isMyTurn){
+    console.log("hola mun");
+    if(isMyTurn){
+        $("#actionAddCard").show();
+        $("#actionSendBoard").show();
+    }else{
+        $("#actionAddCard").hide();
+        $("#actionSendBoard").hide();
+    }
+}
 
 function addCardToPlayer(){
-        clearInterval(timer);
-        $("#timer").text("Waiting");
+    clearInterval(timer);
+    $("#timer").text("Waiting");
         
     updateCardsByPlayer();
     request = {
@@ -355,6 +369,8 @@ function addCardToPlayer(){
         }
     }
     webSocket.send(JSON.stringify(request));
+    ableDisable(isMyTurn);
+    console.log("este es mi turno: "+isMyTurn);
 }
 
 

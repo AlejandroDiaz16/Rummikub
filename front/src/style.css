@@ -17,6 +17,9 @@ footer {
 	width: -webkit-fill-available;
 }
 
+.hideBot {
+	display: none;
+}
 .labels {
   font: oblique bold 120% cursive;
 }
