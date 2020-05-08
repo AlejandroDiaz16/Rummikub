@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="82142846-57ca-4c77-aff4-b66dc29d692d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../api/Rummikub/Rummikub/build/built-jar.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../api/Rummikub/Rummikub/build/built-jar.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/inGameScript.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/inGameScript.js" afterDir="false" />
     </list>
@@ -37,7 +36,7 @@
       <option name="presentableId" value="Default" />
       <updated>1588786482166</updated>
       <workItem from="1588786484817" duration="3281000" />
-      <workItem from="1588904475654" duration="1751000" />
+      <workItem from="1588904475654" duration="3839000" />
     </task>
     <servers />
   </component>
