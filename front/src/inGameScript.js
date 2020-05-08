@@ -168,20 +168,9 @@ function addSection(card) {
 
 function orderCardsByColor(){
     updateCardsByPlayer();
-    var jugadas=$("#cardsOnHand").children();
-    var dataTosend=[];
-    $.each(jugadas,function(index,obj){
-        var dataa = $(obj);
-        var dixe =$("<div></div>");
-        dixe.append(dataa);
-        dataTosend[index]=cardsOnHand[dixe.html()+""];
-    });
-    //var jsonObject = JSON.stringify(dataTosend);
-    //console.log(jsonObject);
     request = {
         type: 'sortCardsByColor',
         data: {
-            cards: dataTosend,
             room: localStorage.getItem("playerRoom")
         }
     }
@@ -190,18 +179,9 @@ function orderCardsByColor(){
 
 function orderCardsByNumber(){
     updateCardsByPlayer();
-    var jugadas=$("#cardsOnHand").children();
-    var dataTosend=[];
-    $.each(jugadas,function(index,obj){
-        var dataa = $(obj);
-        var dixe =$("<div></div>");
-        dixe.append(dataa);
-        dataTosend[index]=cardsOnHand[dixe.html()+""];
-    });
     request = {
         type: 'sortCardsByNumber',
         data: {
-            cards: dataTosend,
             room: localStorage.getItem("playerRoom")
         }
     }
@@ -213,9 +193,8 @@ function updateCardsByPlayer(){
     var dataTosend=[];
     $.each(jugadas,function(index,obj){
         var dataa = $(obj);
-        var dixe =$("<div></div>");
-        dixe.append(dataa);
-        dataTosend[index]=cardsOnHand[dixe.html()+""];
+        var imgTag = $(dataa.html());
+        dataTosend.push(cardsOnHand[imgTag.prop("src")]);
     });
     request = {
         type: 'updateCardsByPlayer',
@@ -225,11 +204,11 @@ function updateCardsByPlayer(){
         }
     }
     webSocket.send(JSON.stringify(request));
-    console.log(dataTosend);
 }
 
 
 function addCardToPlayer(){
+
     updateCardsByPlayer();
     request = {
         type: 'addCardToPlayer',
@@ -265,7 +244,7 @@ function sendBoard(){
 /*links cards   Black01 */
 
 function printInitialCards() {
-    
+
     $.each(cards, function (index, obj) {
         var card1;
         if (obj.valor == 0) {
@@ -391,7 +370,9 @@ function printInitialCards() {
         imgCard += 'src="https://i.ibb.co/HN7vBzL/card-Black13.jpg">';
     }
     imgCard += '</div>';
-    cardsOnHand[imgCard]=obj;
+    imgCard = $(imgCard);
+    var addToHash = $(imgCard.children("img")[0]);
+    cardsOnHand[addToHash.prop("src")]=obj;
     $("#cardsOnHand").append(imgCard);
     });
     //console.log(cardsOnHand);
