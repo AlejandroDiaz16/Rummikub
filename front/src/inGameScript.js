@@ -57,7 +57,35 @@ webSocket.onmessage = function (JSONResponse) {
         console.log(response.data);
         printPlayersInfo();
     }
+    else if(response.type == "updateBoard"){
+        console.log(response.data.message);
+    }
+    else if(response.type == "getBoard"){
+        console.log(response.data);
+        cards = response.data.board.jugadas;
+        console.log(response.data);
+        console.log(cards);
+        printCardsOnBoard(cards);
+    }
+}
 
+function printCardsOnBoard(cards) {
+console.log("cartas "+cards);
+    $.each(cards,function(index,obj){
+        console.log("linea75: "+obj)
+        var roww = $("<div class='connected-sortable droppable-area1 colTam ui-sortable'></div>"); 
+        $.each(obj.cartas,function(indexe,obje){
+            console.log("este: "+obje);
+            var cardURL = getURLByCard(obje);
+            var imgTag = $("<img></img>");
+            imgTag.prop("src", cardURL);
+            imgTag.addClass("cardsTam");
+            var divv = $("<div class='draggable-item'></div>")
+            divv.append(imgTag);
+            roww.append(divv);
+        });
+        $("#cardsGame").append(roww);
+    });
 }
 
 function printCardsByPlayer(cards) {
@@ -251,13 +279,21 @@ function sendBoard(){
         var hijos = data1.children();
         $.each(hijos,function(indexe,obje){
             var dataa = $(obje);
-            var dixe =$("<div></div>");
-            dixe.append(dataa);
-            dataTosend2[index]=cardsOnHand[dixe.html()+""];
+            imgCard = $(dataa.html());
+            //console.log(imgCard.prop("src"));    
+            dataTosend2.push(cardsRepositoryMap[imgCard.prop("src")]);
         });
-        dataTosend[index]=dataTosend2;
+        dataTosend.push({cards:dataTosend2});
     });
-    console.log(dataTosend);
+    request = {
+        type: 'updateBoard',
+        data: {
+            jugadas: dataTosend,
+            room: localStorage.getItem("playerRoom")
+        }
+    }
+    console.log(request);
+    webSocket.send(JSON.stringify(request));
 }
 
 
@@ -396,7 +432,7 @@ function getURLByCard(card) {
 function createHashMapCards(cards) {
 
     $.each(cards, function (index, obj) {
-        cardsRepositoryMap[getURLByCard(obj)];
+        cardsRepositoryMap[getURLByCard(obj)]=obj;
     });
     //console.log(cardsOnHand);
    // console.log("asd");
