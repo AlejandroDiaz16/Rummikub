@@ -30,7 +30,7 @@ webSocket.onopen = function (evt) {
     keepCon = setInterval(keepAlive, 10000);
     updateSocketPlayer();
     initialCards();
-    //   getPlayersInfo();
+    getPlayersInfo();
 }
 
 function keepAlive() {
@@ -52,7 +52,40 @@ webSocket.onmessage = function (JSONResponse) {
     else if(response.type == "setSocketPlayer"){
         console.log(response.data.message);
     }
+    else if(response.type == "getPlayersByRoom"){
+        players=response.data.playersInfo;
+        console.log(response.data);
+        printPlayersInfo();
+    }
+    else if(response.type == "updateBoard"){
+        console.log(response.data.message);
+    }
+    else if(response.type == "getBoard"){
+        console.log(response.data);
+        cards = response.data.board.jugadas;
+        console.log(response.data);
+        console.log(cards);
+        printCardsOnBoard(cards);
+    }
+}
 
+function printCardsOnBoard(cards) {
+console.log("cartas "+cards);
+    $.each(cards,function(index,obj){
+        console.log("linea75: "+obj)
+        var roww = $("<div class='connected-sortable droppable-area1 colTam ui-sortable'></div>");
+        $.each(obj.cartas,function(indexe,obje){
+            console.log("este: "+obje);
+            var cardURL = getURLByCard(obje);
+            var imgTag = $("<img></img>");
+            imgTag.prop("src", cardURL);
+            imgTag.addClass("cardsTam");
+            var divv = $("<div class='draggable-item'></div>")
+            divv.append(imgTag);
+            roww.append(divv);
+        });
+        $("#cardsGame").append(roww);
+    });
 }
 
 function printCardsByPlayer(cards) {
@@ -122,26 +155,17 @@ function getPlayersInfo(){
         }
     }
     webSocket.send(JSON.stringify(request));
-        var roomeCode="hola Code: "+localStorage.getItem("playerRoom");
-        document.getElementById("local").innerHTML = "Room Code: " + localStorage.getItem("playerRoom");
 }
 
-function printPlayersInfo(){
-    console.log(players.length);
-    $.each(players,function(index, obj){
-        var clase="#player"+(index+1);
-        var statusPlayer="#statusPlayer"+(index+1);
-        var changeState="#changeState"+(index+1);
+function printPlayersInfo() {
+    console.log("qwe");
+    $.each(players, function (index, obj) {
+        var clase = "#player" + (index + 1);
         console.log(clase);
         $(clase).text(obj.playerName);
-        if(obj.state == false){$(statusPlayer).text("I'm not ready");}
-        else if(obj.state == true){$(statusPlayer).text("I'm ready");}
-        $(changeState).addClass("changes");
-        if(localStorage.getItem("playerName").toLowerCase() == obj.playerName.toLowerCase()){
-            $(changeState).removeClass("changes");
-        }
     });
 }
+
 /**/
 
 function removeEmptyColTam() {
@@ -170,25 +194,6 @@ function initialCards() {
     webSocket.send(JSON.stringify(request));
 }
 
-function printPlayersInfo() {
-    console.log(players.length);
-    $.each(players, function (index, obj) {
-        var clase = "#player" + (index + 1);
-        var statusPlayer = "#statusPlayer" + (index + 1);
-        var changeState = "#changeState" + (index + 1);
-        console.log(clase);
-        $(clase).text(obj.playerName);
-        if (obj.state == false) {
-            $(statusPlayer).text("I'm not ready");
-        } else if (obj.state == true) {
-            $(statusPlayer).text("I'm ready");
-        }
-        $(changeState).addClass("changes");
-        if (localStorage.getItem("playerName").toLowerCase() == obj.playerName.toLowerCase()) {
-            $(changeState).removeClass("changes");
-        }
-    });
-}
 
 /*Game functions*/
 
@@ -261,14 +266,33 @@ function addCardToPlayer(){
     webSocket.send(JSON.stringify(request));
 }
 
+
 /*send board*/
 
 function sendBoard(){
     var board=$("#cardsGame").children();
     var dataTosend=[];
     $.each(board,function(index,obj){
-        console.log(obj);
+        var data1 = $(obj);
+        var dataTosend2=[];
+        var hijos = data1.children();
+        $.each(hijos,function(indexe,obje){
+            var dataa = $(obje);
+            imgCard = $(dataa.html());
+            //console.log(imgCard.prop("src"));
+            dataTosend2.push(cardsRepositoryMap[imgCard.prop("src")]);
+        });
+        dataTosend.push({cards:dataTosend2});
     });
+    request = {
+        type: 'updateBoard',
+        data: {
+            jugadas: dataTosend,
+            room: localStorage.getItem("playerRoom")
+        }
+    }
+    console.log(request);
+    webSocket.send(JSON.stringify(request));
 }
 
 
