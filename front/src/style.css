@@ -11,11 +11,41 @@ body {
 footer {
 	background-image: url("https://i.ibb.co/zS74RRT/fondo-Madera.jpg");
 	position: absolute;
-	min-height: 240px;
+	min-height: 20%;
 	bottom: 0;
 	left: 0px;
-	width: 100%;
-	height: auto;
+	width: -webkit-fill-available;
+}
+
+.labels {
+  font: oblique bold 120% cursive;
+}
+#local {
+  font: oblique bold 120% cursive;
+}
+.labelTitle {
+	    margin-top: 20%;
+  font: oblique bold 250% cursive;
+}
+.labels2 {
+  font: oblique bold 100% cursive;
+}
+
+#inicio {
+	text-align: center;
+	height: -webkit-fill-available;
+    width: -webkit-fill-available;
+}
+.newDiv{
+	margin: 10% 0% !important; 
+
+}
+
+.divFoot{
+	margin: 60% 0% !important;
+}
+.divCenter{
+	margin: 60% 0% !important;
 }
 
 #headerPlayers {
@@ -77,9 +107,6 @@ footer {
 }
 
 .container {
-	/min-width: 400px;/
-	/min-height: 492px;/
-	height:-webkit-fill-available;
 }
 
 .centerElements {
@@ -87,7 +114,7 @@ footer {
 }
 
 .marginFoot {
-	margin: 30px 30px !important;
+	margin: 5px 30px !important;
 }
 
 .row {
@@ -117,20 +144,22 @@ footer {
 }
 
 .tableCards {
-	width: 80%;
-	height: 66vh;
+	width: 95%;
+	height: 77vh;
 	display: flex;
 	flex-wrap: wrap;
 	align-content: flex-start;
 }
+.hola21{
+	
+}
 
 .claseNueva {
-	width: 20%;
-	min-width: 20%;
 	background-image: url("https://i.ibb.co/zS74RRT/fondo-Madera.jpg");
-	border: 5px solid transparent;
 	border-image:url("https://i.ibb.co/zS74RRT/fondo-Madera.jpg") 30 30 round;
 	text-align: center;
+	border:double; 
+	margin: 0;
 }
 
 .iconTam {
@@ -143,13 +172,12 @@ footer {
 .colTam {
 	display: flex;
 	margin: 0 5px;
-	max-height: 60px !important;
-	width: auto !important;
+	flex-wrap: wrap;
 }
 
 .cardsTam {
-	height: 55px;
-	width: 45px;
+	height: 80px !important;
+	width: 60px !important;
 }
 
 .local {
@@ -164,20 +192,18 @@ footer .cardsTam {
 }
 
 
-.startTheGame {
-	align-self: center;
-}
-
 .newRow {
-	width: 100%;
+	width: 25% !important;
 	min-height: 130px;
 	background-color: gray;
-
-    margin-left: 0px;
+	margin: 0% 45%;
+    margin-left: 0%;
     border: 10px solid;
     border-bottom: 15px solid;
     border-image: url("https://i.ibb.co/zS74RRT/fondo-Madera.jpg") 30 30 round;
-    margin-right: 0;}
+    margin-right: 0%;
+}
+
 
 #tableGame > div {
 	width: 100% !important;
@@ -194,11 +220,11 @@ footer .cardsTam {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 40% 100%;
+    background-size: 100% 100%;
 }
 
 .titleJoin {
-	margin-top: 40%;
+	margin-top: 40%: 
 }
 
 .joinBottom {
@@ -211,5 +237,5 @@ footer .cardsTam {
 }
 
 .inputRoom {
-	margin-top: 20%;
+	margin-top: 0%;
 }

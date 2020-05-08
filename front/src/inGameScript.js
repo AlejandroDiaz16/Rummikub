@@ -1,6 +1,6 @@
 init();
 
-var apiURL = "ws://25.133.184.153:12500";
+var apiURL = "ws://25.133.184.148:12500";
 var webSocket = new WebSocket(apiURL);
 var keepCon;
 var answerPetition;
@@ -9,6 +9,8 @@ var players;
 var playersReady;
 var cardsRepositoryArray = [];
 var cardsRepositoryMap = [];
+var timer;
+var isTurn;
 
 var card = new Object();
 card.color = "";
@@ -31,6 +33,8 @@ webSocket.onopen = function (evt) {
     updateSocketPlayer();
     initialCards();
     getPlayersInfo();
+    getBoard();
+    getTurn();
 }
 
 function keepAlive() {
@@ -56,17 +60,94 @@ webSocket.onmessage = function (JSONResponse) {
         players=response.data.playersInfo;
         console.log(response.data);
         printPlayersInfo();
+        getTurn();
+        isTurn();
     }
     else if(response.type == "updateBoard"){
         console.log(response.data.message);
+
+        if(response.data.message == "200 OK"){
+            updateCardsByPlayer();
+            isTurn();
+        }
+        if(response.data.message == "Score isn't enough"){
+            alert("Score isn't enough");
+            initialCards();
+        }
+        else if(response.data.message == "invalid Board"){
+            alert("Invalid Board");
+        }
     }
     else if(response.type == "getBoard"){
+        //console.log(response.data);
         console.log(response.data);
-        cards = response.data.board.jugadas;
-        console.log(response.data);
-        console.log(cards);
+        cards = response.data.board.cards;
+        $("#cardsGame").empty();
         printCardsOnBoard(cards);
     }
+    else if(response.type == "getIsTurnPlayer"){
+        console.log(response.data);
+        isMyTurn=response.data.isMyTurn;
+        if(isMyTurn){startTimer();}
+    }
+    else if(response.type =="endGame"){
+        win=response.data.winners;
+        
+    }
+}
+
+
+function getTurn(){
+    request = {
+        type:'getIsTurnPlayer',
+        data:{
+            room:localStorage.getItem("playerRoom")
+        }
+    }
+    webSocket.send(JSON.stringify(request));
+}
+
+function isTurn(){
+    $.each(players, function (index, obj) {
+        console.log(obj.isTurn);
+        if(obj.isTurn){
+            var clase = "#player" + (index + 1);
+            console.log(clase);
+            $(clase).addClass("isTurn");
+        }else{
+            var clase = "#player" + (index + 1);
+            console.log(clase);
+            $(clase).removeClass("isTurn");
+        }
+    });
+}
+
+function startTimer(){
+    $("#timer").text("30");
+    timer=setInterval(restarTimer,1000);
+}
+
+function restarTimer(){
+    var numero = $("#timer").text();
+    //console.log(numero);
+    numero=parseInt(numero);
+    numero--;
+    if(numero==0){
+        addCardToPlayer();
+        
+    }else{
+        $("#timer").text(numero);
+    }
+}
+
+function endTurn(){
+    request = {
+        type: 'finishTurn',
+        data: {
+            room: localStorage.getItem("playerRoom")
+        }
+    }
+    webSocket.send(JSON.stringify(request));
 }
 
 function printCardsOnBoard(cards) {
@@ -74,7 +155,7 @@ console.log("cartas "+cards);
     $.each(cards,function(index,obj){
         console.log("linea75: "+obj)
         var roww = $("<div class='connected-sortable droppable-area1 colTam ui-sortable'></div>"); 
-        $.each(obj.cartas,function(indexe,obje){
+        $.each(obj.cards,function(indexe,obje){
             console.log("este: "+obje);
             var cardURL = getURLByCard(obje);
             var imgTag = $("<img></img>");
@@ -86,6 +167,16 @@ console.log("cartas "+cards);
         });
         $("#cardsGame").append(roww);
     });
+}
+
+function getBoard(){
+    request = {
+        type:'getBoard',
+        data:{
+            room:localStorage.getItem("playerRoom")
+        }
+    }
+    webSocket.send(JSON.stringify(request));
 }
 
 function printCardsByPlayer(cards) {
@@ -162,7 +253,7 @@ function printPlayersInfo() {
     $.each(players, function (index, obj) {
         var clase = "#player" + (index + 1);
         console.log(clase);
-        $(clase).text(obj.playerName);
+        $(clase).text(obj.playerName+" - "+obj.cards);
     });
 }
 
@@ -197,9 +288,6 @@ function initialCards() {
 
 /*Game functions*/
 
-function checkMove() {
-    console.log("checkMove");
-}
 
 /*addSection*/
 
@@ -256,7 +344,9 @@ function updateCardsByPlayer(){
 
 
 function addCardToPlayer(){
-
+        clearInterval(timer);
+        $("#timer").text("Waiting");
+        
     updateCardsByPlayer();
     request = {
         type: 'addCardToPlayer',

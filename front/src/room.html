@@ -10,17 +10,19 @@
 	<title>Juego</title>
 </head>
 <body>
-<div class="container gameBackground centerElements">
-	<headerclass="titleDash"><h2>Rummikub Online</h2></header>
+	<div id="inicio">
+		
+<div id="inicio"  class="container gameBackground centerElements">
+	<headerclass="titleDash"><h2 class="labelTitle">Rummikub Online</h2></header>
 	<div class="row playersDash">
 		<div class="col-auto mb-3">
 			<div class="card playerCard" style="width: 18rem;">
 				<img src="https://i.ibb.co/Q8qYT9q/player1img.jpg" class="card-img-top maxTam maxTamCardPlayer" alt="player1img">
 				<div class="card-body">
-					<h5 id="player1" class="player card-title">Player 1</h5>
-					<a id="changeState1" onclick="changeStatus();" class="changes btn btn-primary">Ready</a>
+					<h5 id="player1" class="player card-title labels">Player 1</h5>
+					<a id="changeState1" onclick="changeStatus();" class="changes btn btn-primary labels2">Ready</a>
 				</div>
-				<div class="card-footer text-muted" id="statusPlayer1">
+				<div class="card-footer text-muted labels2" id="statusPlayer1">
 					Waiting
 				</div>
 			</div>
@@ -29,10 +31,10 @@
 			<div class="card playerCard" style="width: 18rem;">
 				<img src="https://i.ibb.co/8Mdp2pX/player2img.jpg" alt="player2img" class="card-img-top maxTam maxTamCardPlayer" >
 				<div class="card-body">
-					<h5 id="player2" class="player card-title">Player 2</h5>
-					<a id="changeState2" onclick="changeStatus();" class=" changes btn btn-primary">Ready</a>
+					<h5 id="player2" class="player card-title labels">Player 2</h5>
+					<a id="changeState2" onclick="changeStatus();" class=" changes btn btn-primary labels2">Ready</a>
 				</div>
-				<div class="card-footer text-muted" id="statusPlayer2">
+				<div class="card-footer text-muted labels2" id="statusPlayer2">
 					waiting
 				</div>
 			</div>
@@ -42,10 +44,10 @@
 			<div class="card playerCard" style="width: 18rem;">
 				<img src="https://i.ibb.co/HhGJ32Y/player3img.jpg" alt="player3img" class="card-img-top maxTam maxTamCardPlayer">
 				<div class="card-body">
-					<h5 id="player3" class="player card-title">Player 3</h5>
-					<a id="changeState3" onclick="changeStatus();" class="changes btn btn-primary ">Waiting</a>
+					<h5 id="player3" class="player card-title labels">Player 3</h5>
+					<a id="changeState3" onclick="changeStatus();" class="changes btn btn-primary labels2">Waiting</a>
 				</div>
-				<div class="card-footer text-muted" id="statusPlayer3">
+				<div class="card-footer text-muted labels2" id="statusPlayer3">
 					Not Ready yet
 				</div>
 			</div>
@@ -55,17 +57,17 @@
 			<div class="card playerCard" style="width: 18rem;">
 				<img src="https://i.ibb.co/68QvxPW/player4img.jpg" alt="player4img" class="card-img-top maxTam maxTamCardPlayer" >
 				<div class="card-body">
-					<h5 id="player4" class="player card-title">Player 4</h5>
-					<a id="changeState4" onclick="changeStatus();" class="changes btn btn-primary">Waiting</a>
+					<h5 id="player4" class="player card-title labels">Player 4</h5>
+					<a id="changeState4" onclick="changeStatus();" class="changes btn btn-primary labels2">Waiting</a>
 				</div>
-				<div class="card-footer text-muted" id="statusPlayer4">
+				<div class="card-footer text-muted labels2" id="statusPlayer4">
 					Not Ready yet
 				</div>
 			</div>
 		</div>
 	</div>
 		<div class="startTheGame">
-			<a onclick="startGame();" class="btn btn-primary">	Start The Game</a>
+			<a onclick="startGame();" class="btn btn-primary labels2">	Start The Game</a>
 		</div>
 		<h2 id="local"></h2>
 	</div>
@@ -78,5 +80,6 @@
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	</div>
 </body>
 </html>

@@ -7,20 +7,35 @@
 </head>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <body>
-<div class="container gameBackground centerElements">
+<div id="inicio" class="container gameBackground centerElements">
 	
-	<div class="startTheGame">
-		<h2>Rummikub Online</h2>
-		<label class="labels" for="playerNamee">name</label>
-		<input id="playerNamee" type="text" name="playerNamee" class="inputRoom"><br>
-		<label class="labels" for="roomCode">room</label>
-		<input id="roomCode" type="text" name="roomCode" class="inputRoom">
-		<a onclick="joinGame();" class=" btn btn-primary">Join Game</a>
-		<h2 class="orText">Or</h2>
-		<a onclick="createGame();" class="joinBottom btn btn-primary">Create a New Game</a>
-		<h2 class="titleJoin">Designed by Mani-Pro</h2>
+	<div id="startTheGame">
+	
+		<div class="divTitle">
+			<label class="labelTitle">Rummikub Online</label>
+		</div>
+		<div class="divCenter">
+			
+			<div class="newDiv">
+				<label class="labels" for="playerNamee">name: </label>
+				<input id="playerNamee" type="text" name="playerNamee" class="inputRoom"  maxlength="15" ><br>  
+			</div>
+			<div class="newDiv">
+				<label class="labels" for="roomCode">room: </label>
+				<input id="roomCode" type="text" name="roomCode" class="inputRoom" maxlength="7" >              
+			</div>
+			<div class="newDiv">
+				<a onclick="joinGame();" class=" btn btn-primary labels2">Join Game</a>
+				<a onclick="createGame();" class="joinBottom btn btn-primary labels2">Create a New Game</a>
+			</div>
+		</div>
+		<div class="divFoot">
+			
+			<h2 class="titleJoin labels">Designed by Mani-Pro</h2>
+		</div>
+
 	</div>
 	
 </div>

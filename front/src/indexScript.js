@@ -1,4 +1,4 @@
-var apiURL = "ws://25.133.184.153:12500";
+var apiURL = "ws://25.133.184.148:12500";
 var webSocket = new WebSocket(apiURL);
 var keepCon;
 var answerPetition;
