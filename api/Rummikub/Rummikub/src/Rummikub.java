@@ -146,6 +146,7 @@ public class Rummikub extends WebSocketServer {
                 Jugador jugador = sala.getJugadorBySocket(clientSocket);
                 jugador.addCarta(sala.getCarta());
                 dataResponse = getCardsByPlayer(idSala, clientSocket);
+                finisTurn(idSala);
                 response.put("type", "getCardsByPlayer");
                 response.put("data", dataResponse);
             } else if (type.equalsIgnoreCase("updateCardsByPlayer")) {
@@ -161,13 +162,27 @@ public class Rummikub extends WebSocketServer {
                 dataResponse = getCardsByPlayer(idSala, clientSocket);
                 response.put("type", type);
                 response.put("data", dataResponse);
-            } else if (type.equalsIgnoreCase("updateBoard")) {
+            } else if(type.equalsIgnoreCase("getIsTurnPlayer")) {
+                String idSala = dataRequest.getString("room");
+                Sala sala = salas.get(idSala);
+                dataResponse = new JSONObject();
+                Jugador jugador = sala.getJugadorBySocket(clientSocket);
+                System.out.println(jugador.getNombre() + " isTurn: " + jugador.isTurn());
+                dataResponse.put("isMyTurn", jugador.isTurn());
+                response.put("type", type);
+                response.put("data", dataResponse);
+            }
+            else if (type.equalsIgnoreCase("updateBoard")) {
                 dataResponse = new JSONObject();
                 String idSala = dataRequest.getString("room");
                 Sala sala = salas.get(idSala);
                 JSONArray jugadas = dataRequest.getJSONArray("jugadas");
-                String message = sala.getTablero().actualizarTablero(jugadas, sala.getJugadorBySocket(clientSocket));
+                String message = sala.actualizarTablero(jugadas, sala.getJugadorBySocket(clientSocket));
                 dataResponse.put("message", message);
+                
+                if (message.equalsIgnoreCase("200 OK")) {
+                    finisTurn(idSala);
+                }
                 
                 //send Board To All Players
                 Hashtable<String, Jugador> jugadores = sala.getJugadores();
@@ -182,7 +197,14 @@ public class Rummikub extends WebSocketServer {
                 
                 response.put("type", type);
                 response.put("data", dataResponse);
-            } else if (type.equalsIgnoreCase("keepAlive")) {
+            } else if (type.equalsIgnoreCase("finishTurn")){
+                String idSala = dataRequest.getString("room");
+                finisTurn(idSala);
+                dataResponse = new JSONObject();
+                dataResponse.put("message", "200 OK");
+                response.put("data", dataResponse);
+            }
+            else if (type.equalsIgnoreCase("keepAlive")) {
                 dataResponse = new JSONObject();
                 response.put("type", type);
                 dataResponse.put("message", "Ok");
@@ -226,7 +248,22 @@ public class Rummikub extends WebSocketServer {
     private void endGame(Sala sala) {
         endGame(sala, null);
     }
-
+    
+    private void finisTurn(String idSala) {
+        Sala sala = salas.get(idSala);
+        sala.finishTurn();
+        JSONObject response = new JSONObject();
+        JSONObject dataResponse = getPlayersByRoom(idSala);
+        response.put("type", "getPlayersByRoom");
+        response.put("data", dataResponse);
+        Hashtable<String, Jugador> jugadores = sala.getJugadores();
+        for (Map.Entry<String, Jugador> entry : jugadores.entrySet()) {
+            Jugador jugador = entry.getValue();
+            jugador.getConn().send(response.toString());
+        }
+        
+    }
+    
     private void endGame(Sala sala, Jugador playerWinner) {
         JSONObject response = new JSONObject();
         JSONObject dataResponse = new JSONObject();
@@ -381,6 +418,7 @@ public class Rummikub extends WebSocketServer {
                 JSONJugador.put("playerName", nombre);
                 JSONJugador.put("state", jugador.isReady());
                 JSONJugador.put("isTurn", jugador.isTurn());
+                JSONJugador.put("cards", jugador.getBaraja().size());
                 jugadores.add(JSONJugador);
             });
             dataResponse.put("playersInfo", jugadores);
@@ -445,8 +483,16 @@ public class Rummikub extends WebSocketServer {
         } else {
             message = "200 OK";
             Tablero board = sala.getTablero();
-            JSONObject jsonBoard = new JSONObject(board);
-            
+            JSONObject jsonBoard = new JSONObject();
+            JSONArray jsonJugadas = new JSONArray();
+            ArrayList<Jugada> jugadas = board.getJugadas();
+            for (int i = 0; i < jugadas.size(); i++) {
+                Jugada jugada = jugadas.get(i);
+                JSONObject jsonJugada = new JSONObject();
+                jsonJugada.put("cards", jugada.getCartas());
+                jsonJugadas.put(i, jsonJugada);
+            }
+            jsonBoard.put("jugadas", jsonJugadas);
             dataResponse.put("board", jsonBoard);
         }
         dataResponse.put("message", message);

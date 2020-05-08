@@ -37,7 +37,7 @@ public class Tablero {
         return validarTablero(this.jugadas);
     }
 
-    private String validarNuevoTablero(ArrayList<Jugada> jugadas, Jugador jugador) {
+    public String validarNuevoTablero(ArrayList<Jugada> jugadas, Jugador jugador) {
         ArrayList<Jugada> jugadasBackup = (ArrayList<Jugada>) jugadas.clone();
         if (!jugador.isPrimeraJugada()) {
             int puntaje = 0;
@@ -68,16 +68,6 @@ public class Tablero {
         }
         return "invalid Board";
 
-    }
-
-    public String actualizarTablero(JSONArray jsonJugadas, Jugador jugador) {
-        ArrayList<Jugada> jugadas = new ArrayList<>();
-        for (int i = 0; i < jsonJugadas.length(); i++) {
-            JSONObject jsonJugada = new JSONObject(jsonJugadas.get(i).toString());
-            JSONArray jsonCartas = jsonJugada.getJSONArray("cards");
-            jugadas.add(new Jugada(jsonCartas));
-        }
-        return validarNuevoTablero(jugadas, jugador);
     }
 
     public ArrayList<Jugada> getJugadas() {

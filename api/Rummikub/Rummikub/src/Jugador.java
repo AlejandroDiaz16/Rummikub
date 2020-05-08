@@ -102,7 +102,7 @@ public class Jugador {
     public ArrayList<Carta> getBaraja() {
         return baraja;
     }
-
+    
     public void setBaraja(ArrayList<Carta> baraja) {
         this.baraja = baraja;
     }    

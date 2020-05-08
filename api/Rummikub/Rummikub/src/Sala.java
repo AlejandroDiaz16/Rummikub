@@ -9,6 +9,8 @@ import java.util.Hashtable;
 import java.util.Map;
 import java.util.Random;
 import org.java_websocket.WebSocket;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
@@ -93,7 +95,17 @@ public class Sala {
     public ArrayList<Carta> getMazo() {
         return mazo;
     }
-
+    
+    public String actualizarTablero(JSONArray jsonJugadas, Jugador jugador) {
+        ArrayList<Jugada> jugadas = new ArrayList<>();
+        for (int i = 0; i < jsonJugadas.length(); i++) {
+            JSONObject jsonJugada = new JSONObject(jsonJugadas.get(i).toString());
+            JSONArray jsonCartas = jsonJugada.getJSONArray("cards");
+            jugadas.add(new Jugada(jsonCartas));
+        }
+        return tablero.validarNuevoTablero(jugadas, jugador);
+    }
+    
     public Hashtable<String, Jugador> getJugadores() {
         return jugadores;
     }
