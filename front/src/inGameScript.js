@@ -88,7 +88,8 @@ $(document).ready(function () {
             $(this).removeClass("droppable-image");
         }
     });
-}
+});
+
 
 /*player info*/
 function getPlayersInfo(){
