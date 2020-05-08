@@ -40,7 +40,7 @@ public class Sala {
             }
         });
     }
-
+    
     public boolean isGameStarted() {
         return gameStarted;
     }

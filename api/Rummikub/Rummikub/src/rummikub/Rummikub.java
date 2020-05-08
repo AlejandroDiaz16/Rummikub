@@ -10,12 +10,17 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import com.google.gson.Gson;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -49,9 +54,15 @@ public class Rummikub extends WebSocketServer {
             cartas.add(new Carta(i, "Yellow"));
         }
         cartas.add(new Carta(0, "Black-Face"));
-
-        Rummikub server = new Rummikub(12500);
-        server.start();
+        
+        JSONObject a2 = new JSONObject();
+        a2.put("cards", cartas);
+        JSONArray arr = (JSONArray) a2.get("cards");
+        JSON
+        System.out.println();
+        //ObjectMapper mapper = new
+        //Rummikub server = new Rummikub(12500);
+        //server.start();
     }
 
     @Override
@@ -90,14 +101,14 @@ public class Rummikub extends WebSocketServer {
                 dataResponse = getBoard(idSala);
                 response.put("type", type);
                 response.put("data", dataResponse);
-            } else if (type.equalsIgnoreCase("setsocketplayer")) {
+            } else if (type.equalsIgnoreCase("setSocketPlayer")) {
                 String nombre = dataRequest.getString("playerName");
                 nombre = nombre.toLowerCase();
                 String idSala = dataRequest.getString("room");
                 dataResponse = setSocketPlayer(nombre, idSala, clientSocket);
                 response.put("type", type);
                 response.put("data", dataResponse);
-            } else if (type.equalsIgnoreCase("getplayersbyroom")) {
+            } else if (type.equalsIgnoreCase("getPlayersByRoom")) {
                 String idSala = dataRequest.getString("room");
                 dataResponse = getPlayersByRoom(idSala);
                 response.put("type", type);
@@ -112,7 +123,49 @@ public class Rummikub extends WebSocketServer {
                 dataResponse = startGame(idSala);
                 response.put("type", type);
                 response.put("data", dataResponse);
-            } else if (type.equalsIgnoreCase("getCardsByPlayer")) {
+                Sala sala = salas.get(idSala);
+                Hashtable<String, Jugador> jugadores = sala.getJugadores();
+                for (Map.Entry<String, Jugador> entry : jugadores.entrySet()) {
+                    Jugador jugador = entry.getValue();
+                    if(!jugador.getConn().equals(clientSocket)) {
+                        jugador.getConn().send(response.toString());
+                    }
+                }
+            } else if (type.equalsIgnoreCase("sortCardsByColor")) {
+                String idSala = dataRequest.getString("room");
+                Sala sala = salas.get(idSala);
+                Jugador jugador = sala.getJugadorBySocket(clientSocket);
+                jugador.ordenarPorEscalera();
+                dataResponse = getCardsByPlayer(idSala, clientSocket);
+                response.put("type", "getCardsByPlayer");
+                response.put("data", dataResponse);
+            } else if(type.equalsIgnoreCase("sortCardsByNumber")) {
+                String idSala = dataRequest.getString("room");
+                Sala sala = salas.get(idSala);
+                Jugador jugador = sala.getJugadorBySocket(clientSocket);
+                jugador.ordenarPorTrios();
+                dataResponse = getCardsByPlayer(idSala, clientSocket);
+                response.put("type", "getCardsByPlayer");
+                response.put("data", dataResponse);
+            } else if(type.equalsIgnoreCase("addCardToPlayer")) {
+                String idSala = dataRequest.getString("room");
+                Sala sala = salas.get(idSala);
+                Jugador jugador = sala.getJugadorBySocket(clientSocket);
+                jugador.addCarta(sala.getCarta());
+                dataResponse = getCardsByPlayer(idSala, clientSocket);
+                response.put("type", "getCardsByPlayer");
+                response.put("data", dataResponse);
+            } else if(type.equalsIgnoreCase("updateCardsByPlayer")){
+                String idSala = dataRequest.getString("data");
+                Sala sala = salas.get(idSala);
+                Jugador jugador = sala.getJugadorBySocket(clientSocket);
+                
+                //jugador.setBaraja((ArrayList<Carta>) dataRequest.getJSONArray("cards"));
+                dataResponse = getCardsByPlayer(idSala, clientSocket);
+                response.put("type", "getCardsByPlayer");
+                response.put("data", dataResponse);
+            }
+            else if (type.equalsIgnoreCase("getCardsByPlayer")) {
                 String idSala = dataRequest.getString("room");
                 dataResponse = getCardsByPlayer(idSala, clientSocket);
                 response.put("type", type);
@@ -161,7 +214,8 @@ public class Rummikub extends WebSocketServer {
     private void endGame(Sala sala) {
         endGame(sala, null);
     }
-
+    
+    
     private void endGame(Sala sala, Jugador playerWinner) {
         JSONObject response = new JSONObject();
         JSONObject dataResponse = new JSONObject();
@@ -214,9 +268,6 @@ public class Rummikub extends WebSocketServer {
             } else {
                 dataResponse.put("cards", baraja);
             }
-            System.out.println(jugador.getNombre());
-            System.out.println(baraja.size());
-            System.out.println(baraja);
         }
         dataResponse.put("message", message);
         return dataResponse;
@@ -247,6 +298,7 @@ public class Rummikub extends WebSocketServer {
                 }
                 if (isPlayersReady) {
                     sala.iniciarJuego();
+                    sala.setGameStarted(true);
                 }
                 dataResponse.put("isPlayersReady", isPlayersReady);
             }
@@ -291,8 +343,6 @@ public class Rummikub extends WebSocketServer {
         String message = "";
         if (sala == null) {
             message = "Romm doesn't exist";
-        } else if (sala.isGameStarted()) {
-            message = "This room has already started";
         } else {
             Jugador jugador = sala.getJugador(nombre);
             if (jugador == null) {
