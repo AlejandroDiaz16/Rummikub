@@ -230,7 +230,7 @@ function updateCardsByPlayer(){
 
 
 function addCardToPlayer(){
-    
+    updateCardsByPlayer();
     request = {
         type: 'addCardToPlayer',
         data: {
@@ -240,14 +240,25 @@ function addCardToPlayer(){
     webSocket.send(JSON.stringify(request));
 }
 
+
 /*send board*/
 
 function sendBoard(){
     var board=$("#cardsGame").children();
     var dataTosend=[];
     $.each(board,function(index,obj){
-        console.log(obj);
+        var data1 = $(obj);
+        var dataTosend2=[];
+        var hijos = data1.children();
+        $.each(hijos,function(indexe,obje){
+            var dataa = $(obje);
+            var dixe =$("<div></div>");
+            dixe.append(dataa);
+            dataTosend2[index]=cardsOnHand[dixe.html()+""];
+        });
+        dataTosend[index]=dataTosend2;
     });
+    console.log(dataTosend);
 }
 
 
