@@ -7,6 +7,9 @@ body {
 	margin-bottom: 40px;
 }
 
+.isTurn {
+	background: red !important;
+}
 
 footer {
 	background-image: url("https://i.ibb.co/zS74RRT/fondo-Madera.jpg");

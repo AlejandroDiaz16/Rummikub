@@ -10,7 +10,7 @@ var playersReady;
 var cardsRepositoryArray = [];
 var cardsRepositoryMap = [];
 var timer;
-var isTurn;
+var isMyTurn;
 
 var card = new Object();
 card.color = "";
@@ -18,11 +18,11 @@ card.value = 0;
 
 cardsRepositoryArray.push({color: 'Black-Face', valor: 0});
 cardsRepositoryArray.push({color: 'Red-Face', valor: 0});
-for (i=1; i<=14; i++) {
-cardsRepositoryArray.push({color: 'Blue', valor: i});
-cardsRepositoryArray.push({color: 'Black', valor: i});
-cardsRepositoryArray.push({color: 'Yellow', valor: i});
-cardsRepositoryArray.push({color: 'Red', valor: i});
+for (i = 1; i <= 14; i++) {
+    cardsRepositoryArray.push({color: 'Blue', valor: i});
+    cardsRepositoryArray.push({color: 'Black', valor: i});
+    cardsRepositoryArray.push({color: 'Yellow', valor: i});
+    cardsRepositoryArray.push({color: 'Red', valor: i});
 }
 
 createHashMapCards(cardsRepositoryArray);
@@ -52,84 +52,87 @@ webSocket.onmessage = function (JSONResponse) {
         console.log(response.data);
         cards = response.data.cards;
         printCardsByPlayer(cards);
-    }
-    else if(response.type == "setSocketPlayer"){
+    } else if (response.type == "setSocketPlayer") {
         console.log(response.data.message);
-    }
-    else if(response.type == "getPlayersByRoom"){
-        players=response.data.playersInfo;
+    } else if (response.type == "getPlayersByRoom") {
+        players = response.data.playersInfo;
         console.log(response.data);
         printPlayersInfo();
         getTurn();
         isTurn();
-    }
-    else if(response.type == "updateBoard"){
+    } else if (response.type == "updateBoard") {
         console.log(response.data.message);
 
-        if(response.data.message == "200 OK"){
+        if (response.data.message == "200 OK") {
             updateCardsByPlayer();
+            endTurn();
             isTurn();
-
-        }
-        if(response.data.message == "Score isn't enough"){
+        }else if (response.data.message == "Score isn't enough") {
             swal({
-                    title: "Error!",
-                    text: "Score isn't enough!",
-                    icon: "warning",
-                    button: "OK",
-                });
+                title: "Error!",
+                text: "Score isn't enough!",
+                icon: "warning",
+                button: "OK",
+            });
 
             initialCards();
-        }
-        else if(response.data.message == "invalid Board"){
+        } else if (response.data.message == "invalid Board") {
+            initialCards();
+            console.log("fdddd");
+            console.log()
             swal({
-                    title: "Error!",
-                    text: "Invalid Board!",
-                    icon: "warning",
-                    button: "OK",
-                });
-            
+                title: "Error!",
+                text: "Invalid Board!",
+                icon: "warning",
+                button: "OK",
+            });
         }
-    }
-    else if(response.type == "getBoard"){
+    } else if (response.type == "getBoard") {
         //console.log(response.data);
         cards = response.data.board.jugadas;
         $("#cardsGame").empty();
         printCardsOnBoard(cards);
-    }
-    else if(response.type == "getIsTurnPlayer"){
+    } else if (response.type == "getIsTurnPlayer") {
         console.log(response.data);
-        isMyTurn=response.data.isMyTurn;
-        if(isMyTurn){
+        isMyTurn = response.data.isMyTurn;
+        if (isMyTurn) {
             startTimer();
             ableDisable(isMyTurn);
-            console.log("es my turno"+isMyTurn);}
-    }
-    else if(response.type =="endGame"){
-        win=response.data.winners;
-        
+            console.log("es my turno" + isMyTurn);
+        }else {
+            
+            stopTimmer();
+        }
+    } else if (response.type == "endGame") {
+        win = response.data.winners;
+        swal({
+            title: "Winner",
+            text: winners.toString(),
+            icon: "succsess",
+            button: "OK",
+        });
     }
 }
 
 
-function getTurn(){
+function getTurn() {
     request = {
-        type:'getIsTurnPlayer',
-        data:{
-            room:localStorage.getItem("playerRoom")
+        type: 'getIsTurnPlayer',
+        data: {
+            room: localStorage.getItem("playerRoom")
         }
     }
     webSocket.send(JSON.stringify(request));
 }
 
-function isTurn(){
+function isTurn() {
     $.each(players, function (index, obj) {
         console.log(obj.isTurn);
-        if(obj.isTurn){
+        if (obj.isTurn) {
             var clase = "#player" + (index + 1);
             console.log(clase);
             $(clase).addClass("isTurn");
-        }else{
+        } else {
             var clase = "#player" + (index + 1);
             console.log(clase);
             $(clase).removeClass("isTurn");
@@ -137,24 +140,34 @@ function isTurn(){
     });
 }
 
-function startTimer(){
+function startTimer() {
     $("#timer").text("30");
-    timer=setInterval(restarTimer,1000);
+    timer = setInterval(restarTimer, 1000);
 }
 
-function restarTimer(){
+function restarTimer() {
     var numero = $("#timer").text();
-    //console.log(numero);
-    numero=parseInt(numero);
+    console.log(numero);
+    numero = parseInt(numero);
     numero--;
-    if(numero==0){
+    if (numero == 0) {
         addCardToPlayer();
-    }else{
+        stopTimmer();
+    } else {
         $("#timer").text(numero);
     }
 }
 
-function endTurn(){
+function stopTimmer() {
+    clearInterval(timer);
+    clearInterval(timer);
+    clearInterval(timer);
+    clearInterval(timer);
+    clearTimeout(timer);
+    $("#timer").text("Waiting");
+}
+
+function endTurn() {
     request = {
         type: 'finishTurn',
         data: {
@@ -165,12 +178,12 @@ function endTurn(){
 }
 
 function printCardsOnBoard(cards) {
-console.log("cartas "+cards);
-    $.each(cards,function(index,obj){
-        console.log("linea75: "+obj)
-        var roww = $("<div class='connected-sortable droppable-area1 colTam ui-sortable'></div>"); 
-        $.each(obj.cards,function(indexe,obje){
-            console.log("este: "+obje);
+    console.log("cartas " + cards);
+    $.each(cards, function (index, obj) {
+        console.log("linea75: " + obj)
+        var roww = $("<div class='connected-sortable droppable-area1 colTam ui-sortable'></div>");
+        $.each(obj.cards, function (indexe, obje) {
+            console.log("este: " + obje);
             var cardURL = getURLByCard(obje);
             var imgTag = $("<img></img>");
             imgTag.prop("src", cardURL);
@@ -183,18 +196,18 @@ console.log("cartas "+cards);
     });
 }
 
-function getBoard(){
+function getBoard() {
     request = {
-        type:'getBoard',
-        data:{
-            room:localStorage.getItem("playerRoom")
+        type: 'getBoard',
+        data: {
+            room: localStorage.getItem("playerRoom")
         }
     }
     webSocket.send(JSON.stringify(request));
 }
 
 function printCardsByPlayer(cards) {
-    $.each(cards,function(index, obj){
+    $.each(cards, function (index, obj) {
         var cardURL = getURLByCard(obj);
         var imgTag = $("<img></img>");
         imgTag.prop("src", cardURL);
@@ -224,7 +237,7 @@ function init() {
     $(".droppable-area1, .droppable-area2").sortable({
         connectWith: ".connected-sortable",
         stack: '.connected-sortable ul',
-        update: function(){
+        update: function () {
             removeEmptyColTam();
         }
     }).disableSelection();
@@ -251,8 +264,8 @@ $(document).ready(function () {
 
 
 /*player info*/
-function getPlayersInfo(){
-    var roomPlayer= localStorage.getItem("playerRoom");
+function getPlayersInfo() {
+    var roomPlayer = localStorage.getItem("playerRoom");
     request = {
         type: 'getPlayersByRoom',
         data: {
@@ -267,7 +280,7 @@ function printPlayersInfo() {
     $.each(players, function (index, obj) {
         var clase = "#player" + (index + 1);
         console.log(clase);
-        $(clase).text(obj.playerName+" - "+obj.cards);
+        $(clase).text(obj.playerName + " - " + obj.cards);
     });
 }
 
@@ -278,7 +291,7 @@ function removeEmptyColTam() {
     for (i = 0; i < cardsGameChildren.length; i++) {
         var colTam = $(cardsGameChildren[i]);
         var img = colTam.find("img");
-        if(img.length == 0){
+        if (img.length == 0) {
             colTam.remove()
         }
     }
@@ -316,7 +329,7 @@ function addSection(card) {
 
 /*ordenamientos*/
 
-function orderCardsByColor(){
+function orderCardsByColor() {
     updateCardsByPlayer();
     request = {
         type: 'sortCardsByColor',
@@ -327,7 +340,7 @@ function orderCardsByColor(){
     webSocket.send(JSON.stringify(request));
 }
 
-function orderCardsByNumber(){
+function orderCardsByNumber() {
     updateCardsByPlayer();
     request = {
         type: 'sortCardsByNumber',
@@ -338,10 +351,10 @@ function orderCardsByNumber(){
     webSocket.send(JSON.stringify(request));
 }
 
-function updateCardsByPlayer(){
-    var jugadas=$("#cardsOnHand").children();
-    var dataTosend=[];
-    $.each(jugadas,function(index,obj){
+function updateCardsByPlayer() {
+    var jugadas = $("#cardsOnHand").children();
+    var dataTosend = [];
+    $.each(jugadas, function (index, obj) {
         var dataa = $(obj);
         var imgTag = $(dataa.html());
         dataTosend.push(cardsRepositoryMap[imgTag.prop("src")]);
@@ -356,50 +369,50 @@ function updateCardsByPlayer(){
     webSocket.send(JSON.stringify(request));
 }
 
-function ableDisable(isMyTurn){
+function ableDisable(isMyTurn) {
     console.log("hola mun");
-    if(isMyTurn){
+    if (isMyTurn) {
         $("#actionAddCard").show();
         $("#actionSendBoard").show();
-    }else{
+    } else {
         $("#actionAddCard").hide();
         $("#actionSendBoard").hide();
     }
 }
 
-function addCardToPlayer(){
+function addCardToPlayer() {
     clearInterval(timer);
     $("#timer").text("Waiting");
-        
     updateCardsByPlayer();
     request = {
         type: 'addCardToPlayer',
         data: {
-            room:localStorage.getItem("playerRoom")
+            room: localStorage.getItem("playerRoom")
         }
     }
     webSocket.send(JSON.stringify(request));
+    endTurn();
     ableDisable(isMyTurn);
-    console.log("este es mi turno: "+isMyTurn);
+    console.log("este es mi turno: " + isMyTurn);
 }
 
 
 /*send board*/
 
-function sendBoard(){
-    var board=$("#cardsGame").children();
-    var dataTosend=[];
-    $.each(board,function(index,obj){
+function sendBoard() {
+    var board = $("#cardsGame").children();
+    var dataTosend = [];
+    $.each(board, function (index, obj) {
         var data1 = $(obj);
-        var dataTosend2=[];
+        var dataTosend2 = [];
         var hijos = data1.children();
-        $.each(hijos,function(indexe,obje){
+        $.each(hijos, function (indexe, obje) {
             var dataa = $(obje);
             imgCard = $(dataa.html());
             //console.log(imgCard.prop("src"));    
             dataTosend2.push(cardsRepositoryMap[imgCard.prop("src")]);
         });
-        dataTosend.push({cards:dataTosend2});
+        dataTosend.push({cards: dataTosend2});
     });
     request = {
         type: 'updateBoard',
@@ -418,8 +431,12 @@ function sendBoard(){
 function getURLByCard(card) {
     var card1;
     if (card.valor == 0) {
-        if (card.color == "Black-Face") {card1 = card.color;}
-        if (card.color == "Red-Face") {card1 = card.color;}
+        if (card.color == "Black-Face") {
+            card1 = card.color;
+        }
+        if (card.color == "Red-Face") {
+            card1 = card.color;
+        }
     }
     if (card.valor < 10 && card.valor > 0) {
         card1 = card.color + "0" + card.valor;
@@ -548,10 +565,10 @@ function getURLByCard(card) {
 function createHashMapCards(cards) {
 
     $.each(cards, function (index, obj) {
-        cardsRepositoryMap[getURLByCard(obj)]=obj;
+        cardsRepositoryMap[getURLByCard(obj)] = obj;
     });
     //console.log(cardsOnHand);
-   // console.log("asd");
+    // console.log("asd");
 }
 
 

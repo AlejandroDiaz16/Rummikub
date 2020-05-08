@@ -2,8 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="82142846-57ca-4c77-aff4-b66dc29d692d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../api/Rummikub/Rummikub/build/built-jar.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../api/Rummikub/Rummikub/build/built-jar.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/homeScript.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/homeScript.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/inGame.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/inGame.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/inGameScript.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/inGameScript.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/room.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/room.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,17 +49,17 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="184" y="86" key="MergeDialog" timestamp="1588913893335">
+    <state x="184" y="86" key="MergeDialog" timestamp="1588954710275">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="184" y="86" key="MergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1588913893335" />
-    <state x="672" y="237" key="MultipleFileMergeDialog" timestamp="1588913893347">
+    <state x="184" y="86" key="MergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1588954710275" />
+    <state x="672" y="237" key="MultipleFileMergeDialog" timestamp="1588954712039">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="672" y="237" key="MultipleFileMergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1588913893347" />
-    <state x="771" y="439" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1588913744704">
+    <state x="672" y="237" key="MultipleFileMergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1588954712039" />
+    <state x="771" y="439" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1588954689803">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="771" y="439" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1588913744704" />
+    <state x="771" y="439" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1588954689803" />
   </component>
 </project>
